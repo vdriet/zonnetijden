@@ -1,29 +1,34 @@
+""" Flexibel opvraagbare tijden van zonsopkomst en -ondergang """
+import datetime
+
 from flask import Flask, render_template
 from flask import request
-from flask import json
 
 from astral import LocationInfo
 from astral.sun import sun
 
-import datetime
 import pytz
 
 app = Flask(__name__)
 
 def formatdate(date) :
+    """ f """
     localdate = date.astimezone(pytz.timezone('Europe/Amsterdam'))
     formatteddate = datetime.datetime.strftime(localdate, '%Y-%m-%d')
     return formatteddate
 
 def formattime(date) :
+    """ f """
     localdate = date.astimezone(pytz.timezone('Europe/Amsterdam'))
     formatteddate = datetime.datetime.strftime(localdate, '%H:%M')
     return formatteddate
 
 def formattimedelta(timedelta) :
-    return str(timedelta).split(".")[0]
+    """ f """
+    return str(timedelta).split(".", maxsplit=1)[0]
 
 def berekenzonnetijden(datum, plaats, lat, lon) :
+    """ f """
     datumdelen = datum.split('-')
     jaar = int(datumdelen[0])
     maand = int(datumdelen[1])
@@ -32,27 +37,26 @@ def berekenzonnetijden(datum, plaats, lat, lon) :
     return sun(city.observer, date=datetime.date(jaar, maand, dag), tzinfo=city.timezone)
 
 def getinfo(datum, plaats, lat, lon) :
+    """ f """
     res = berekenzonnetijden(datum, plaats, lat, lon)
 
-    op       = res['sunrise']
+    opkomst  = res['sunrise']
     onder    = res['sunset']
-    daglengs = onder - op
+    daglengs = onder - opkomst
     result = {}
-    result['datum'] = formatdate(op)
-    result['op'] = formattime(op)
+    result['datum'] = formatdate(opkomst)
+    result['op'] = formattime(opkomst)
     result['onder'] = formattime(onder)
     result['daglengte'] = formattimedelta(daglengs)
     return result
 
 def getinfohattem(datum) :
+    """ f """
     return getinfo(datum, 'Hattem', 52.479108, 6.060676)
-
-def getinfoondate(jaar, maand, dag) :
-    datum = '{}-{:02d}-{:02d}'.format(jaar,maand,dag)
-    getinfo(datum)
 
 @app.route('/vandaag', methods=['GET'])
 def vandaagget():
+    """ f """
     gegevens = []
 
     vandaag = datetime.date.today()
@@ -72,28 +76,29 @@ def vandaagget():
 
 @app.route('/vandaaglang', methods=['GET'])
 def vandaaggetlang():
+    """ f """
     gegevens = []
     plaats = request.args.get('plaats')
     argterug = request.args.get('terug')
     argvooruit = request.args.get('vooruit')
 
-    if (plaats == None) :
-      plaats = 'Hattem'
+    if plaats is None :
+        plaats = 'Hattem'
     else :
-      plaats = plaats.capitalize()
+        plaats = plaats.capitalize()
 
     try :
-      int(argterug)
+        int(argterug)
     except TypeError :
-      print('standaard terug 10')
-      argterug = '10'
+        print('standaard terug 10')
+        argterug = '10'
     terug = -1 * int(argterug)
 
     try :
-      int(argvooruit)
+        int(argvooruit)
     except TypeError :
-      print('standaard vooruit 50')
-      argvooruit = '50'
+        print('standaard vooruit 50')
+        argvooruit = '50'
     vooruit = int(argvooruit)
     if plaats == 'Zwolle' :
         lat = 52.537563
@@ -103,8 +108,8 @@ def vandaaggetlang():
         lon = 6.060676
     vandaag = datetime.date.today()
     for i in range(terug, vooruit) :
-      dag = vandaag + datetime.timedelta(i)
-      gegevens.append(getinfo(str(dag), plaats, lat, lon))
+        dag = vandaag + datetime.timedelta(i)
+        gegevens.append(getinfo(str(dag), plaats, lat, lon))
 
     return render_template('vandaag.html', plaats = plaats, rows = gegevens)
 
