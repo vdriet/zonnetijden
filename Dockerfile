@@ -10,6 +10,7 @@ RUN pip install --upgrade pip
 RUN pip --trusted-host pypi.python.org install --no-cache-dir -r requirements.txt
 
 COPY /*.py /usr/src/app/
+COPY /templates/* /usr/src/app/templates/
 
 EXPOSE 8080
 
