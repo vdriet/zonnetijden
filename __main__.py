@@ -75,8 +75,8 @@ def vandaagget():
 
     return render_template('vandaag.html', plaats = 'Hattem', rows = gegevens)
 
-@app.route('/vandaaglang', methods=['GET'])
-def vandaaggetlang():
+@app.route('/zon', methods=['GET'])
+def zonget():
     """ f """
     gegevens = []
     plaats = request.args.get('plaats')
