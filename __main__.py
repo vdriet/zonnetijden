@@ -1,5 +1,6 @@
 """ Flexibel opvraagbare tijden van zonsopkomst en -ondergang """
 import datetime
+import waitress
 
 from flask import Flask, render_template
 from flask import request
@@ -114,4 +115,4 @@ def vandaaggetlang():
     return render_template('vandaag.html', plaats = plaats, rows = gegevens)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8083, debug=False)
+    waitress.serve(app, host="0.0.0.0", port=8083)

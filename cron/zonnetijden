@@ -1,0 +1,1 @@
+@reboot root [ -x /home/peter/dev/zonnetijden/run.sh ] && /home/peter/dev/zonnetijden/run.sh
