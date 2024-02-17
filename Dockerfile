@@ -14,4 +14,4 @@ COPY /templates/* /usr/src/app/templates/
 
 EXPOSE 8080
 
-CMD [ "python", "." ]
+CMD [ "python", "-u", "." ]
