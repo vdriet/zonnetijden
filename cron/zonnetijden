@@ -1,1 +1,1 @@
-@reboot root [ -x /home/peter/dev/zonnetijden/run.sh ] && /home/peter/dev/zonnetijden/run.sh
+@reboot root [ -x /home/peter/dev/zonnetijden/run.sh ] && /home/peter/dev/zonnetijden/run.sh >> /home/peter/logs/cron_zonnetijden.log 2>&1
