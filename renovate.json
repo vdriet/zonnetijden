@@ -3,7 +3,12 @@
   "extends": [
     "config:recommended"
   ],
+  "assignees": ["vdriet"],
   "packageRules": [
+    {
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    },
     {
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
