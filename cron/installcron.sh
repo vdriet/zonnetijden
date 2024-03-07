@@ -1,1 +1,1 @@
-cp zonnetijden /etc/cron.d/
+cp -u zonnetijden /etc/cron.d/
