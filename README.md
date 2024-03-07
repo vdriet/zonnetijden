@@ -1,1 +1,3 @@
 # zonnetijden
+
+run in /opt
