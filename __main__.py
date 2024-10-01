@@ -76,7 +76,7 @@ def vandaagget():
   return render_template('vandaag.html', plaats = 'Hattem', rows = gegevens)
 
 @app.route('/weer', methods=['GET'])
-def vandaagget():
+def weerget():
   """ f """
   gegevens = []
 
