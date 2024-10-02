@@ -78,12 +78,10 @@ def vandaagget():
 @app.route('/weer', methods=['GET'])
 def weerget():
   """ f """
-  gegevens = []
-
   vandaag = datetime.date.today()
-  zon = getinfohattem(str(vandaag))
-
-  return render_template('weer.html', plaats = 'Hattem', gegevens = zon)
+  gegevens = getinfohattem(str(vandaag))
+  print(gegevens)
+  return render_template('weer.html', plaats = 'Hattem', gegevens = gegevens)
 
 @app.route('/zon', methods=['GET'])
 def zonget():
