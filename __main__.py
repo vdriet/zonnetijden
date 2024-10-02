@@ -1,16 +1,30 @@
 """ Flexibel opvraagbare tijden van zonsopkomst en -ondergang """
 import datetime
-import waitress
+import json
+import os
 
-from flask import Flask, render_template
-from flask import request
+from urllib.request import urlopen, Request
 
 from astral import LocationInfo
 from astral.sun import sun
 
+from flask import Flask, render_template
+from flask import request
+
 import pytz
+import waitress
 
 app = Flask(__name__)
+weerapikey = os.environ['WEER_API_KEY']
+
+
+def leesjson(url):
+  """ haal JSON van de URL op """
+  req = Request(url=url)
+  with urlopen(req) as response:
+    contenttekst = response.read().decode('utf-8')
+    contentjson = json.loads(contenttekst)
+    return contentjson
 
 def formatdate(date) :
   """ f """
@@ -75,11 +89,20 @@ def vandaagget():
 
   return render_template('vandaag.html', plaats = 'Hattem', rows = gegevens)
 
+def getweerinfo():
+  """ f """
+  url = f'https://weerlive.nl/api/weerlive_api_v2.php?key={weerapikey}&locatie=Hattem'
+  weerinfo = leesjson(url)
+  temp = weerinfo['liveweer'][0]['temp']
+  return temp
+
 @app.route('/weer', methods=['GET'])
 def weerget():
   """ f """
   vandaag = datetime.date.today()
   gegevens = getinfohattem(str(vandaag))
+  weerinfo = getweerinfo()
+  gegevens['temp'] = weerinfo
   print(gegevens)
   return render_template('weer.html', plaats = 'Hattem', gegevens = gegevens)
 
