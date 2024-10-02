@@ -93,8 +93,7 @@ def getweerinfo():
   """ f """
   url = f'https://weerlive.nl/api/weerlive_api_v2.php?key={weerapikey}&locatie=Hattem'
   weerinfo = leesjson(url)
-  temp = weerinfo['liveweer'][0]['temp']
-  return temp
+  return weerinfo
 
 @app.route('/weer', methods=['GET'])
 def weerget():
@@ -102,8 +101,9 @@ def weerget():
   vandaag = datetime.date.today()
   gegevens = getinfohattem(str(vandaag))
   weerinfo = getweerinfo()
-  gegevens['temp'] = weerinfo
-  print(gegevens)
+  gegevens['temp'] = weerinfo['liveweer'][0]['temp']
+  gegevens['samenv'] = weerinfo['liveweer'][0]['samenv']
+  gegevens['verw'] = weerinfo['liveweer'][0]['verw']
   return render_template('weer.html', plaats = 'Hattem', gegevens = gegevens)
 
 @app.route('/zon', methods=['GET'])

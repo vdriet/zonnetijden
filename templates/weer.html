@@ -13,13 +13,10 @@
   </style>
  </head>
  <body>
-  <p>
-   <table>
-    <tr><th>Datum</th><th>Zon op</th><th>Zon onder</th><th>Daglengte</th></tr>
-    <tr><td>{{gegevens['datum']}}</td><td>{{gegevens['op']}}</td><td>{{gegevens['onder']}}</td><td>{{gegevens['daglengte']}}</td></tr>
-   </table>
-  </p>
-  <p>Temp: {{gegevens['temp']}}</p>
+   <h1>Vandaag: {{gegevens['datum']}}</h1> 
+   <p>De zon is op van {{gegevens['op']}} tot {{gegevens['onder']}}. Dat duurt {{gegevens['daglengte']}}.</p>
+   <p>Het is {{gegevens['samenv'] en de temperatuur is {{gegevens['temp']}}.</p>
+   <p>De verwachting is {{gegevens['verw']}}.
  </body>
 </html>
 
