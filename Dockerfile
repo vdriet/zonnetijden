@@ -5,7 +5,10 @@ WORKDIR /usr/src/app
 
 RUN apt-get update && apt-get install -y locales 
 RUN printf "nl_NL.UTF-8 UTF-8" > /etc/locale.gen && locale-gen
-ENV LANG=nl_NL.UTF-8 LANGUAGE=nl_NL.UTF-8 LC_ALL=nl_NL.UTF-8
+ENV LANG=nl_NL.UTF-8
+ENV LANGUAGE=nl_NL.UTF-8
+ENV LC_ALL=nl_NL.UTF-8
+ENV LC_TIME=nl_NL.UTF-8
 ENV TZ=Europe/Amsterdam
 
 COPY requirements.txt /usr/src/app/

@@ -1,7 +1,6 @@
 """ Flexibel opvraagbare tijden van zonsopkomst en -ondergang """
 import datetime
 import json
-import locale
 import os
 
 from urllib.request import urlopen, Request
@@ -99,7 +98,6 @@ def getweerinfo():
 @app.route('/weer', methods=['GET'])
 def weerget():
   """ f """
-  locale.setlocale(locale.LC_TIME, 'nl_NL.UTF-8')
   vandaag = datetime.date.today()
   gegevens = getinfohattem(str(vandaag))
   weerinfo = getweerinfo()
