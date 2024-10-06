@@ -101,9 +101,9 @@ def weerget():
   vandaag = datetime.date.today()
   gegevens = getinfohattem(str(vandaag))
   weerinfo = getweerinfo()
-  gegevens['dag'] = vandaag.strptime('%-d')
-  gegevens['weekdag'] = vandaag.strptime('%A')
-  gegevens['maand'] = vandaag.strptime('%B')
+  gegevens['dag'] = vandaag.strftime('%-d')
+  gegevens['weekdag'] = vandaag.strftime('%A')
+  gegevens['maand'] = vandaag.strftime('%B')
   gegevens['temp'] = weerinfo['liveweer'][0]['temp']
   gegevens['samenv'] = weerinfo['liveweer'][0]['samenv']
   gegevens['verw'] = weerinfo['liveweer'][0]['verw']
