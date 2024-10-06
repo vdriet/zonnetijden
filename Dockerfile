@@ -1,8 +1,11 @@
-FROM python:3.12
+FROM python:3.12-bookworm
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
+RUN apt-get update && apt-get install -y locales 
+RUN printf "nl_NL.UTF-8 UTF-8" > /etc/locale.gen && locale-gen
+ENV LANG=nl_NL.UTF-8 LANGUAGE=nl_NL.UTF-8 LC_ALL=nl_NL.UTF-8
 ENV TZ=Europe/Amsterdam
 
 COPY requirements.txt /usr/src/app/
