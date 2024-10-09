@@ -12,12 +12,14 @@ from astral.sun import sun
 from flask import Flask, render_template
 from flask import request
 
+from cachetools import cached, TTLCache
+
 import pytz
 import waitress
 
 app = Flask(__name__)
 weerapikey = os.environ['WEER_API_KEY']
-
+weercache = TTLCache(maxsize=1, ttl=300)
 
 def leesjson(url):
   """ haal JSON van de URL op """
@@ -90,6 +92,7 @@ def vandaagget():
 
   return render_template('vandaag.html', plaats = 'Hattem', rows = gegevens)
 
+@cached(weercache)
 def getweerinfo():
   """ f """
   url = f'https://weerlive.nl/api/weerlive_api_v2.php?key={weerapikey}&locatie=Hattem'
