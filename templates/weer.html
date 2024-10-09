@@ -3,21 +3,19 @@
   <title>Vandaag in {{plaats}}</title>
   <style>
    table, th, td {
-    border: 1px solid black;
+    background: aqua;
+    border: 0px solid black;
     border-collapse: collapse;
     padding: 3px;
-   }
-   tr:nth-child(even) {
-    background-color: #f2f2f2
    }
   </style>
  </head>
  <body>
-   <h1>Vandaag: {{gegevens['datum']}}</h1>
-   <p>Het is vandaag {{gegevens['weekdag']}} {{gegevens['dag']}} {{gegevens['maand']}}.</p>
-   <p>De zon is op van {{gegevens['op']}} tot {{gegevens['onder']}}. Dat duurt {{gegevens['daglengte']}}.</p>
-   <p>Het is {{gegevens['samenv']}} en de temperatuur is {{gegevens['temp']}}.</p>
-   <p>De verwachting is {{gegevens['verw']}}.
+  <table>
+   <tr><td colspan=3><font size=20>{{gegevens['weekdag']}} {{gegevens['dag']}} {{gegevens['maand']}}</font></td></tr>
+   <tr><td>{{gegevens['op']}}</td><td>{{gegevens['onder']}}</td><td>{{gegevens['daglengte']}}</td></tr>
+   <tr><td>{{gegevens['temp']}}</td><td colspan=2>{{gegevens['samenv']}}</td></tr>
+   <tr><td colspan=3>{{gegevens['verw']}}</td></tr>
+  </table>
  </body>
 </html>
-
