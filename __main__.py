@@ -109,6 +109,7 @@ def weerget():
   gegevens['temp'] = weerinfo['liveweer'][0]['temp']
   gegevens['samenv'] = weerinfo['liveweer'][0]['samenv']
   gegevens['verw'] = weerinfo['liveweer'][0]['verw']
+  gegevens['bron'] = weerinfo['api'][0]['bron']
   return render_template('weer.html', plaats = 'Hattem', gegevens = gegevens)
 
 @app.route('/zon', methods=['GET'])
