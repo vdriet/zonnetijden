@@ -2,22 +2,18 @@
  <head>
   <title>Vandaag in {{plaats}}</title>
   <style>
-   table, th, td {
-    background: aqua;
-    border: 0px solid black;
-    border-collapse: collapse;
-    padding: 3px;
-   }
    .container {
      display: grid;
+     width: 400px;
      grid-template-columns: 1fr 1fr 1fr 1fr;
-     grid-template-rows: 1fr 1fr 1fr 1fr;
+     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
      gap: 0px 0px;
      grid-auto-flow: row;
      grid-template-areas:
        "dagnummer weekdag weekdag temperatuur"
        "dagnummer maand maand temperatuur"
-       "zonop zononder daglengte weertekst"
+       "zonop zononder daglengte samenvatting"
+       "weertekst weertekst weertekst weertekst";
        "bron bron bron bron";
    }
    .dagnummer {
@@ -33,6 +29,11 @@
      grid-area: maand;
      background: aqua;
    }
+   .temperatuur {
+     grid-area: temperatuur;
+     background: aqua;
+     font-size: 48;
+   }
    .zonop {
      grid-area: zonop;
      background: aqua;
@@ -45,18 +46,18 @@
      grid-area: daglengte;
      background: aqua;
    }
-   .weertekst {
+   .samenvatting {
      grid-area: weertekst;
      background: aqua;
    }
-   .temperatuur {
-     grid-area: temperatuur;
+   .weertekst {
+     grid-area: weertekst;
      background: aqua;
-     font-size: 48;
+     font-size: 7;
    }
    .bron {
      grid-area: bron;
-     font-size: 2;
+     font-size: 5;
    }
   </style>
  </head>
