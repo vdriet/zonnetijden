@@ -16,9 +16,9 @@
      grid-auto-flow: row;
      grid-template-areas:
        "dagnummer weekdag weekdag temperatuur"
-       "dagnummer weekdag maand temperatuur"
-       ". . . ."
-       "bron bron . .";
+       "dagnummer maand maand temperatuur"
+       "zonop zononder daglengte weertekst"
+       "bron bron bron bron";
    }
    .dagnummer {
      grid-area: dagnummer;
@@ -33,6 +33,22 @@
      grid-area: maand;
      background: aqua;
    }
+   .zonop {
+     grid-area: zonop;
+     background: aqua;
+   }
+   .zononder {
+     grid-area: zononder;
+     background: aqua;
+   }
+   .daglengte {
+     grid-area: daglengte;
+     background: aqua;
+   }
+   .weertekst {
+     grid-area: weertekst;
+     background: aqua;
+   }
    .temperatuur {
      grid-area: temperatuur;
      background: aqua;
@@ -40,25 +56,22 @@
    }
    .bron {
      grid-area: bron;
-     font-size: 1;
+     font-size: 2;
    }
   </style>
  </head>
  <body>
-  <table>
-   <tr><td colspan=3><font size=8>{{gegevens['weekdag']}} {{gegevens['dag']}} {{gegevens['maand']}}</font></td></tr>
-   <tr><td>{{gegevens['op']}}</td><td>{{gegevens['onder']}}</td><td>{{gegevens['daglengte']}}</td></tr>
-   <tr><td>{{gegevens['temp']}}</td><td colspan=2>{{gegevens['samenv']}}</td></tr>
-   <tr><td colspan=3>{{gegevens['verw']}}</td></tr>
-  </table>
-  <p><font size=1>{{gegevens['bron']}}</font></p>
-  <br/>
   <div class="container">
    <div class="dagnummer">{{gegevens['dag']}}</div>
    <div class="weekdag">{{gegevens['weekdag']}}</div>
    <div class="maand">{{gegevens['maand']}}</div>
    <div class="temperatuur">{{gegevens['temp']}}</div>
+   <div class="zonop">{{gegevens['op']}}</div>
+   <div class="zononder">{{gegevens['onder']}}</div>
+   <div class="daglengte">{{gegevens['daglengte']}}</div>
+   <div class="weertekst">{{gegevens['samenv']}}</div>
    <div class="bron">{{gegevens['bron']}}</div>
   </div>
+  <p>{{gegevens['verw']}}</p>
  </body>
 </html>
