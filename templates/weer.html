@@ -8,6 +8,34 @@
     border-collapse: collapse;
     padding: 3px;
    }
+   .container {
+     display: grid;
+     grid-template-columns: 1fr 1fr 1fr 1fr;
+     grid-template-rows: 1fr 1fr 1fr 1fr;
+     gap: 0px 0px;
+     grid-auto-flow: row;
+     grid-template-areas:
+       "dagnummer dagnummer weekdag weekdag"
+       "dagnummer dagnummer maand maand"
+       ". . . ."
+       "bron . . .";
+   }
+   .dagnummer {
+     grid-area: dagnummer;
+     background: aqua;
+     font-size: 48;
+   }
+   .weekdag {
+     grid-area: weekdag;
+     background: aqua;
+   }
+   .maand {
+     grid-area: maand;
+     background: aqua;
+   }
+   .bron {
+     grid-area: bron;
+   }
   </style>
  </head>
  <body>
@@ -18,5 +46,12 @@
    <tr><td colspan=3>{{gegevens['verw']}}</td></tr>
   </table>
   <p><font size=1>{{gegevens['bron']}}</font></p>
+  <br/>
+  <div class="container">
+   <div class="dagnummer">{{gegevens['dag']}}</div>
+   <div class="weekdag">{{gegevens['weekdag']}}</div>
+   <div class="maand">{{gegevens['maand']}}</div>
+   <div class="bron">{{gegevens['verw']}}</div>
+  </div>
  </body>
 </html>
