@@ -5,15 +5,15 @@
    .container {
      display: grid;
      width: 400px;
-     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-     grid-template-rows: 1fr 1fr 1fr 1fr;
+     grid-template-columns: 1fr 1fr 1fr 1fr;
+     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
      gap: 0px 0px;
      grid-auto-flow: row;
      grid-template-areas:
-       "dagnummer weekdag weekdag temperatuur"
-       "dagnummer maand maand temperatuur"
-       "zonop zononder daglengte samenvatting"
-       "weertekst weertekst weertekst weertekst";
+       "dagnummer maand weekdag temperatuur"
+       "dagnummer samenvatting samenvatting temperatuur"
+       "zonop zononder daglengte daglengte"
+       "weertekst weertekst weertekst weertekst"
        "bron bron bron bron";
    }
    .dagnummer {
