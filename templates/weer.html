@@ -4,16 +4,16 @@
   <style>
    .container {
      display: grid;
-     width: 360px;
+     width: 350px;
      grid-template-columns: 1fr 1fr 1fr 1fr;
      grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
      gap: 0px 0px;
      grid-auto-flow: row;
      grid-template-areas:
-       "dagnummer maand weekdag temperatuur"
+       "weekdag zonop zononder daglengte"
        "dagnummer samenvatting samenvatting temperatuur"
-       "zonop zononder daglengte daglengte"
-       "weertekst weertekst weertekst weertekst"
+       "dagnummer weertekst weertekst temperatuur"
+       "maand weertekst weertekst temperatuur"
        "bron bron bron bron";
    }
    .dagnummer {
