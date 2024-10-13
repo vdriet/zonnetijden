@@ -6,13 +6,13 @@
      display: grid;
      width: 350px;
      grid-template-columns: 1fr 1fr 1fr 1fr;
-     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
      gap: 0px 0px;
      grid-auto-flow: row;
      grid-template-areas:
        "weekdag zonop zononder daglengte"
+       "dagnummer windrichting windsnelheid temperatuur"
        "dagnummer samenvatting samenvatting temperatuur"
-       "dagnummer weertekst weertekst temperatuur"
        "maand weertekst weertekst temperatuur"
        "bron bron bron bron";
    }
@@ -40,6 +40,14 @@
      background: aqua;
      text-align: center;
      font-size: 48;
+   }
+   .windrichting {
+     grid-area: windrichting;
+     background: aqua;
+   }
+   .windsnelheid {
+     grid-area: windsnelheid;
+     background: aqua;
    }
    .zonop {
      grid-area: zonop;
@@ -79,6 +87,8 @@
    <div class="weekdag">{{gegevens['weekdag']}}</div>
    <div class="maand">{{gegevens['maand']}}</div>
    <div class="temperatuur">{{gegevens['temp']}}</div>
+   <div class="windrichting">{{gegevens['windr']}}</div>
+   <div class="windsnelheid">{{gegevens['windbft']}}</div>
    <div class="zonop">{{gegevens['op']}}</div>
    <div class="zononder">{{gegevens['onder']}}</div>
    <div class="daglengte">{{gegevens['daglengte']}}</div>
