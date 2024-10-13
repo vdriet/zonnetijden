@@ -13,7 +13,7 @@
        "weekdag zonop zononder daglengte"
        "dagnummer windrichting windsnelheid temperatuur"
        "dagnummer samenvatting samenvatting temperatuur"
-       "maand weertekst weertekst temperatuur"
+       "maand weertekst weertekst gevoeltemp"
        "bron bron bron bron";
    }
    .dagnummer {
@@ -36,10 +36,14 @@
    }
    .temperatuur {
      grid-area: temperatuur;
-     border-radius: 0px 0px 20px 0px;
      background: aqua;
      text-align: center;
      font-size: 48;
+   }
+   .gevoeltemp {
+     grid-area: gevoeltemp;
+     border-radius: 0px 0px 20px 0px;
+     background: aqua;
    }
    .windrichting {
      grid-area: windrichting;
@@ -87,6 +91,7 @@
    <div class="weekdag">{{gegevens['weekdag']}}</div>
    <div class="maand">{{gegevens['maand']}}</div>
    <div class="temperatuur">{{gegevens['temp']}}</div>
+   <div class="gevoeltemp">{{gegevens['gtemp']}}</div>
    <div class="windrichting">{{gegevens['windr']}}</div>
    <div class="windsnelheid">{{gegevens['windbft']}}</div>
    <div class="zonop">{{gegevens['op']}}</div>

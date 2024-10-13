@@ -110,6 +110,7 @@ def weerget():
   gegevens['weekdag'] = vandaag.strftime('%A')
   gegevens['maand'] = vandaag.strftime('%B')
   gegevens['temp'] = weerinfo['liveweer'][0]['temp']
+  gegevens['gtemp'] = weerinfo['liveweer'][0]['gtemp']
   gegevens['samenv'] = weerinfo['liveweer'][0]['samenv']
   gegevens['verw'] = weerinfo['liveweer'][0]['verw']
   gegevens['windr'] = weerinfo['liveweer'][0]['windr']
