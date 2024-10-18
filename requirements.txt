@@ -5,7 +5,7 @@ click==8.1.7
 Flask==3.0.3
 itsdangerous==2.2.0
 Jinja2==3.1.4
-MarkupSafe==3.0.1
+MarkupSafe==3.0.2
 pytz==2024.2
 setuptools==75.2.0
 waitress==3.0.0
