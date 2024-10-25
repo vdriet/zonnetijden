@@ -9,4 +9,4 @@ MarkupSafe==3.0.2
 pytz==2024.2
 setuptools==75.2.0
 waitress==3.0.0
-Werkzeug==3.0.4
+Werkzeug==3.0.5
