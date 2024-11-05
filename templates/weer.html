@@ -10,8 +10,8 @@
      gap: 0px 0px;
      grid-auto-flow: row;
      grid-template-areas:
-       "weekdag zonop zononder daglengte"
-       "dagnummer windrichting windsnelheid temperatuur"
+       "weekdag leeg zon wind"
+       "dagnummer leeg daglengte temperatuur"
        "dagnummer samenvatting samenvatting temperatuur"
        "maand weertekst weertekst gevoeltemp"
        "maand weertekst weertekst gevoeltemp"
@@ -47,27 +47,24 @@
      text-align: center;
      background: aqua;
    }
-   .windrichting {
-     grid-area: windrichting;
+   .wind {
+     border-radius: 0px 20px 0px 0px;
+     text-align: center;
+     grid-area: wind;
      background: aqua;
    }
-   .windsnelheid {
-     grid-area: windsnelheid;
-     background: aqua;
-   }
-   .zonop {
-     grid-area: zonop;
+   .leeg {
+     grid-area: leeg;
      text-align: center;
      background: aqua;
    }
-   .zononder {
-     grid-area: zononder;
+   .zon {
+     grid-area: zon;
      text-align: center;
      background: aqua;
    }
    .daglengte {
      grid-area: daglengte;
-     border-radius: 0px 20px 0px 0px;
      background: aqua;
      text-align: center;
      font-size: 10;
@@ -93,11 +90,11 @@
    <div class="weekdag">{{gegevens['weekdag']}}</div>
    <div class="maand">{{gegevens['maand']}}</div>
    <div class="temperatuur">{{gegevens['temp']}}</div>
-   <div class="gevoeltemp">{{gegevens['gtemp']}}</div>
-   <div class="windrichting">{{gegevens['windr']}}</div>
-   <div class="windsnelheid">{{gegevens['windbft']}}</div>
-   <div class="zonop">{{gegevens['op']}}</div>
-   <div class="zononder">{{gegevens['onder']}}</div>
+   <div class="gevoeltemp">{{gegevens['gtemp']}} °C</div>
+   <div class="leeg"></div>
+   <div class="wind">{{gegevens['windr']}} {{gegevens['windbft']}} bft</div>
+   <div class="leeg"></div>
+   <div class="zon">{{gegevens['op']}} - {{gegevens['onder']}}</div>
    <div class="daglengte">{{gegevens['daglengte']}}</div>
    <div class="samenvatting">{{gegevens['samenv']}}</div>
    <div class="weertekst">{{gegevens['verw']}}</div>
