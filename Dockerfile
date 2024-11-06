@@ -9,7 +9,7 @@ ENV TZ=Europe/Amsterdam
 
 COPY requirements.txt /usr/src/app/
 RUN pip install --upgrade pip
-RUN pip --trusted-host pypi.python.org install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --index-url https://test.pypi.org/simple/ --extra-index-url=https://pypi.org/simple/ -r requirements.txt
 
 COPY /*.py /usr/src/app/
 COPY /templates/* /usr/src/app/templates/
