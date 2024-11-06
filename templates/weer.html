@@ -11,7 +11,7 @@
      grid-auto-flow: row;
      grid-template-areas:
        "weekdag leeg zon wind"
-       "dagnummer leeg daglengte temperatuur"
+       "dagnummer waterstand daglengte temperatuur"
        "dagnummer samenvatting samenvatting temperatuur"
        "maand weertekst weertekst gevoeltemp"
        "maand weertekst weertekst gevoeltemp"
@@ -58,6 +58,11 @@
      text-align: center;
      background: aqua;
    }
+   .waterstand {
+     grid-area: waterstand;
+     text-align: center;
+     background: aqua;
+   }
    .zon {
      grid-area: zon;
      text-align: center;
@@ -95,6 +100,7 @@
    <div class="leeg"></div>
    <div class="wind">{{gegevens['windr']}} {{gegevens['windbft']}} bft</div>
    <div class="leeg"></div>
+   <div class="waterstand">{{gegevens['waterstand']}} - {{gegevens['waterstandmorgen']}}</div>
    <div class="zon">{{gegevens['op']}} - {{gegevens['onder']}}</div>
    <div class="daglengte">{{gegevens['daglengte']}}</div>
    <div class="samenvatting">{{gegevens['samenv']}}</div>

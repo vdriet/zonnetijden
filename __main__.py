@@ -17,36 +17,42 @@ from cachetools import cached, TTLCache
 import pytz
 import waitress
 
+from waterstand import haalwaterstand
+
 app = Flask(__name__)
 weerapikey = os.environ['WEER_API_KEY']
 weercache = TTLCache(maxsize=1, ttl=300)
+watercache = TTLCache(maxsize=1, ttl=7200)
+
 
 def leesjson(url):
-  """ haal JSON van de URL op """
+  """ Haal JSON van de URL op """
   req = Request(url=url)
   with urlopen(req) as response:
     contenttekst = response.read().decode('utf-8')
     contentjson = json.loads(contenttekst)
     return contentjson
 
-def formatdate(date) :
-  """ f """
-  localdate = date.astimezone(pytz.timezone('Europe/Amsterdam'))
-  formatteddate = datetime.datetime.strftime(localdate, '%Y-%m-%d')
-  return formatteddate
 
-def formattime(date) :
-  """ f """
+def formatdate(date):
+  """ Formateer de datum/tijd naar alleen de datum """
   localdate = date.astimezone(pytz.timezone('Europe/Amsterdam'))
-  formatteddate = datetime.datetime.strftime(localdate, '%H:%M')
-  return formatteddate
+  return datetime.datetime.strftime(localdate, '%Y-%m-%d')
 
-def formattimedelta(timedelta) :
-  """ f """
+
+def formattime(date):
+  """ Formateer de datum/tijd naar de tijd """
+  localdate = date.astimezone(pytz.timezone('Europe/Amsterdam'))
+  return datetime.datetime.strftime(localdate, '%H:%M')
+
+
+def formattimedelta(timedelta):
+  """ Formater het tijdsverschil naar een tijd """
   return str(timedelta).split(".", maxsplit=1)[0]
 
-def berekenzonnetijden(datum, plaats, lat, lon) :
-  """ f """
+
+def berekenzonnetijden(datum, plaats, lat, lon):
+  """ Bereken de tijd van zonsopkomst en ondergang van de gegeven datum en plek """
   datumdelen = datum.split('-')
   jaar = int(datumdelen[0])
   maand = int(datumdelen[1])
@@ -54,27 +60,28 @@ def berekenzonnetijden(datum, plaats, lat, lon) :
   city = LocationInfo(plaats, 'Netherlands', 'Europe/Amsterdam', lat, lon)
   return sun(city.observer, date=datetime.date(jaar, maand, dag), tzinfo=city.timezone)
 
-def getinfo(datum, plaats, lat, lon) :
-  """ f """
+
+def getinfo(datum, plaats, lat, lon):
+  """ Haal de informatie van de zon op gegeven datum en plaats """
   res = berekenzonnetijden(datum, plaats, lat, lon)
 
-  opkomst  = res['sunrise']
-  onder  = res['sunset']
-  daglengs = onder - opkomst
-  result = {}
-  result['datum'] = formatdate(opkomst)
-  result['op'] = formattime(opkomst)
-  result['onder'] = formattime(onder)
-  result['daglengte'] = formattimedelta(daglengs)
+  opkomst = res['sunrise']
+  onder = res['sunset']
+  result = {'datum': formatdate(opkomst),
+            'op': formattime(opkomst),
+            'onder': formattime(onder),
+            'daglengte': formattimedelta(onder - opkomst)}
   return result
 
-def getinfohattem(datum) :
-  """ f """
+
+def getinfohattem(datum):
+  """ Haal de gegevens van Hattem op de gegeven datum """
   return getinfo(datum, 'Hattem', 52.479108, 6.060676)
+
 
 @app.route('/vandaag', methods=['GET'])
 def vandaagget():
-  """ f """
+  """ Toon de gegevens van de zon van vandaag en enige andere datums """
   gegevens = []
 
   vandaag = datetime.date.today()
@@ -90,22 +97,36 @@ def vandaagget():
   gegevens.append(getinfohattem(str(dagplus1w)))
   gegevens.append(getinfohattem(str(dagplus4w)))
 
-  return render_template('vandaag.html', plaats = 'Hattem', rows = gegevens)
+  return render_template('vandaag.html', plaats='Hattem', rows=gegevens)
+
 
 @cached(weercache)
 def getweerinfo():
-  """ f """
+  """ Haal de gegevens van het weer van Hattem op """
   url = f'https://weerlive.nl/api/weerlive_api_v2.php?key={weerapikey}&locatie=Hattem'
   weerinfo = leesjson(url)
   return weerinfo
 
+
+@cached(watercache)
+def getwaterinfo():
+  """ Haal de gegevens van de waterstand bij Zwolle op """
+  waterstand = haalwaterstand('Katerveer', 'KATV')
+  result = {'weergavetijd': waterstand['tijd'],
+            'hoogtenu': waterstand['nu'],
+            'hoogtemorgen': waterstand['morgen']
+            }
+  return result
+
+
 @app.route('/weer', methods=['GET'])
 def weerget():
-  """ f """
+  """ Genereer de pagina met het weer en de zon van vandaag in Hattem """
   locale.setlocale(locale.LC_TIME, 'nl_NL.UTF-8')
   vandaag = datetime.date.today()
   gegevens = getinfohattem(str(vandaag))
   weerinfo = getweerinfo()
+  waterinfo = getwaterinfo()
   gegevens['dag'] = vandaag.strftime('%-d')
   gegevens['weekdag'] = vandaag.strftime('%A')
   gegevens['maand'] = vandaag.strftime('%B')
@@ -116,46 +137,50 @@ def weerget():
   gegevens['windr'] = weerinfo['liveweer'][0]['windr']
   gegevens['windbft'] = weerinfo['liveweer'][0]['windbft']
   gegevens['bron'] = weerinfo['api'][0]['bron']
-  return render_template('weer.html', plaats = 'Hattem', gegevens = gegevens)
+  gegevens['waterstand'] = waterinfo['hoogtenu']
+  gegevens['waterstandmorgen'] = waterinfo['hoogtemorgen']
+  return render_template('weer.html', plaats='Hattem', gegevens=gegevens)
+
 
 @app.route('/zon', methods=['GET'])
 def zonget():
-  """ f """
+  """ Haal de gegevens van de zon op """
   gegevens = []
   plaats = request.args.get('plaats')
   argterug = request.args.get('terug')
   argvooruit = request.args.get('vooruit')
 
-  if plaats is None :
+  if plaats is None:
     plaats = 'Hattem'
-  else :
+  else:
     plaats = plaats.capitalize()
 
-  try :
+  try:
     int(argterug)
-  except TypeError :
+  except TypeError:
     print('standaard terug 10')
     argterug = '10'
   terug = -1 * int(argterug)
 
-  try :
+  try:
     int(argvooruit)
-  except TypeError :
+  except TypeError:
     print('standaard vooruit 50')
     argvooruit = '50'
   vooruit = int(argvooruit)
-  if plaats == 'Zwolle' :
+  if plaats == 'Zwolle':
     lat = 52.537563
     lon = 6.11083
-  else :
+  else:
     lat = 52.479108
     lon = 6.060676
   vandaag = datetime.date.today()
-  for i in range(terug, vooruit) :
+  for i in range(terug, vooruit):
     dag = vandaag + datetime.timedelta(i)
     gegevens.append(getinfo(str(dag), plaats, lat, lon))
 
-  return render_template('vandaag.html', plaats = plaats, rows = gegevens)
+  return render_template('vandaag.html', plaats=plaats, rows=gegevens)
+
 
 if __name__ == '__main__':
   waitress.serve(app, host="0.0.0.0", port=8083)
