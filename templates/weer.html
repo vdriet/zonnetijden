@@ -14,14 +14,8 @@
        "dagnummer weertekst weertekst temperatuur"
        "maand waterstand zon gevoeltemp"
        "maand waterstand daglengte gevoeltemp"
-       "leeglo leeg leeg leegro"
+       "verw0 verw1 verw2 verw3"
        "bron bron bron bron";
-   }
-   .dagnummer {
-     grid-area: dagnummer;
-     background: aqua;
-     text-align: center;
-     font-size: 48;
    }
    .weekdag {
      grid-area: weekdag;
@@ -29,30 +23,8 @@
      text-align: center;
      background: aqua;
    }
-   .maand {
-     grid-area: maand;
-     text-align: center;
-     background: aqua;
-   }
-   .leeglo {
-     grid-area: leeglo;
-     border-radius: 0px 0px 0px 20px;
-     background: aqua;
-   }
-   .temperatuur {
-     grid-area: temperatuur;
-     background: aqua;
-     text-align: center;
-     font-size: 48;
-   }
-   .gevoeltemp {
-     grid-area: gevoeltemp;
-     text-align: center;
-     background: aqua;
-   }
-   .leegro {
-     grid-area: leegro;
-     border-radius: 0px 0px 20px 0px;
+   .samenvatting {
+     grid-area: samenvatting;
      background: aqua;
    }
    .wind {
@@ -61,8 +33,25 @@
      border-radius: 0px 20px 0px 0px;
      background: aqua;
    }
-   .leeg {
-     grid-area: leeg;
+   .dagnummer {
+     grid-area: dagnummer;
+     background: aqua;
+     text-align: center;
+     font-size: 48;
+   }
+   .weertekst {
+     grid-area: weertekst;
+     background: aqua;
+     font-size: 12;
+   }
+   .temperatuur {
+     grid-area: temperatuur;
+     background: aqua;
+     text-align: center;
+     font-size: 48;
+   }
+   .maand {
+     grid-area: maand;
      text-align: center;
      background: aqua;
    }
@@ -84,14 +73,32 @@
      text-align: center;
      font-size: 10;
    }
-   .samenvatting {
-     grid-area: samenvatting;
+   .gevoeltemp {
+     grid-area: gevoeltemp;
+     text-align: center;
      background: aqua;
    }
-   .weertekst {
-     grid-area: weertekst;
+   .verw0 {
+     grid-area: verw0;
+     border-radius: 0px 0px 0px 20px;
+     text-align: center;
      background: aqua;
-     font-size: 12;
+   }
+   .verw1 {
+     grid-area: verw1;
+     text-align: center;
+     background: aqua;
+   }
+   .verw2 {
+     grid-area: verw2;
+     text-align: center;
+     background: aqua;
+   }
+   .verw3 {
+     grid-area: verw3;
+     border-radius: 0px 0px 20px 0px;
+     text-align: center;
+     background: aqua;
    }
    .bron {
      grid-area: bron;
@@ -112,9 +119,10 @@
    <div class="zon">{{gegevens['op']}} - {{gegevens['onder']}}</div>
    <div class="daglengte">{{gegevens['daglengte']}}</div>
    <div class="gevoeltemp">{{gegevens['gtemp']}} °C</div>
-   <div class="leeglo"></div>
-   <div class="leeg"></div>
-   <div class="leegro"></div>
+   <div class="verw0">{{gegevens['min0']}} / {{gegevens['max0']}}</div>
+   <div class="verw1">{{gegevens['min1']}} / {{gegevens['max1']}}</div>
+   <div class="verw2">{{gegevens['min2']}} / {{gegevens['max2']}}</div>
+   <div class="verw3">{{gegevens['min3']}} / {{gegevens['max3']}}</div>
    <div class="bron">{{gegevens['bron']}}</div>
   </div>
  </body>
