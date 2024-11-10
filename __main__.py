@@ -112,9 +112,8 @@ def getweerinfo():
 def getwaterinfo():
   """ Haal de gegevens van de waterstand bij Zwolle op """
   waterstand = haalwaterstand('Katerveer', 'KATV')
-  result = {'weergavetijd': waterstand['tijd'],
-            'hoogtenu': waterstand['nu'],
-            'hoogtemorgen': waterstand['morgen']
+  result = {'hoogtenu': int(waterstand['nu']),
+            'hoogtemorgen': int(waterstand['morgen'])
             }
   return result
 
