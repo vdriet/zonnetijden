@@ -6,15 +6,15 @@
      display: grid;
      width: 350px;
      grid-template-columns: 1fr 1fr 1fr 1fr;
-     grid-template-rows: 2fr 3fr 3fr 3fr 3fr 1fr;
+     grid-template-rows: 4fr 10fr 3fr 3fr 6fr 1fr;
      gap: 0px 0px;
      grid-auto-flow: row;
      grid-template-areas:
-       "weekdag leeg zon wind"
-       "dagnummer waterstand daglengte temperatuur"
-       "dagnummer samenvatting samenvatting temperatuur"
-       "maand weertekst weertekst gevoeltemp"
-       "maand weertekst weertekst gevoeltemp"
+       "weekdag samenvatting samenvatting wind"
+       "dagnummer weertekst weertekst temperatuur"
+       "maand waterstand zon gevoeltemp"
+       "maand waterstand daglengte gevoeltemp"
+       "leeglo leeg leeg leegro"
        "bron bron bron bron";
    }
    .dagnummer {
@@ -31,8 +31,12 @@
    }
    .maand {
      grid-area: maand;
-     border-radius: 0px 0px 0px 20px;
      text-align: center;
+     background: aqua;
+   }
+   .leeglo {
+     grid-area: leeglo;
+     border-radius: 0px 0px 0px 20px;
      background: aqua;
    }
    .temperatuur {
@@ -43,14 +47,18 @@
    }
    .gevoeltemp {
      grid-area: gevoeltemp;
-     border-radius: 0px 0px 20px 0px;
      text-align: center;
      background: aqua;
    }
+   .leegro {
+     grid-area: leegro;
+     border-radius: 0px 0px 20px 0px;
+     background: aqua;
+   }
    .wind {
-     border-radius: 0px 20px 0px 0px;
      text-align: center;
      grid-area: wind;
+     border-radius: 0px 20px 0px 0px;
      background: aqua;
    }
    .leeg {
@@ -62,6 +70,7 @@
      grid-area: waterstand;
      text-align: center;
      background: aqua;
+     font-size: 15;
    }
    .zon {
      grid-area: zon;
@@ -82,7 +91,7 @@
    .weertekst {
      grid-area: weertekst;
      background: aqua;
-     font-size: 10;
+     font-size: 12;
    }
    .bron {
      grid-area: bron;
@@ -92,19 +101,20 @@
  </head>
  <body>
   <div class="container">
-   <div class="dagnummer">{{gegevens['dag']}}</div>
    <div class="weekdag">{{gegevens['weekdag']}}</div>
-   <div class="maand">{{gegevens['maand']}}</div>
-   <div class="temperatuur">{{gegevens['temp']}}</div>
-   <div class="gevoeltemp">{{gegevens['gtemp']}} °C</div>
-   <div class="leeg"></div>
+   <div class="samenvatting">{{gegevens['samenv']}}</div>
    <div class="wind">{{gegevens['windr']}} {{gegevens['windbft']}} bft</div>
-   <div class="leeg"></div>
+   <div class="dagnummer">{{gegevens['dag']}}</div>
+   <div class="weertekst">{{gegevens['verw']}}</div>
+   <div class="temperatuur">{{gegevens['temp']}}</div>
+   <div class="maand">{{gegevens['maand']}}</div>
    <div class="waterstand">{{gegevens['waterstand']}} - {{gegevens['waterstandmorgen']}}</div>
    <div class="zon">{{gegevens['op']}} - {{gegevens['onder']}}</div>
    <div class="daglengte">{{gegevens['daglengte']}}</div>
-   <div class="samenvatting">{{gegevens['samenv']}}</div>
-   <div class="weertekst">{{gegevens['verw']}}</div>
+   <div class="gevoeltemp">{{gegevens['gtemp']}} °C</div>
+   <div class="leeglo"></div>
+   <div class="leeg"></div>
+   <div class="leegro"></div>
    <div class="bron">{{gegevens['bron']}}</div>
   </div>
  </body>
