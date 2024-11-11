@@ -118,29 +118,38 @@ def getwaterinfo():
   return result
 
 
+def bepaaltoenamekleur(verschil):
+  """ bepaal kleur bij toename van temperatuur """
+  if verschil == 1:
+    return 'yellow'
+  if verschil == 2:
+    return 'gold'
+  if verschil == 3:
+    return 'orange'
+  if verschil == 4:
+    return 'darkorange'
+  return 'orangered'
+
+
+def bepaalafnamekleur(verschil):
+  if verschil == -1:
+    return 'lightblue'
+  if verschil == -2:
+    return 'lightskyblue'
+  if verschil == -3:
+    return 'deepskyblue'
+  if verschil == -4:
+    return 'dodgerblue'
+  return 'royalblue'
+
+
 def bepaalkleur(max0, max1):
   """ bepaal achtergrondkleur voor de temperatuur """
-  verschil = max0 - max1
-  if verschil == -1:
-    return 'yellow'
-  if verschil == -2:
-    return 'gold'
-  if verschil == -3:
-    return 'orange'
-  if verschil == -4:
-    return 'darkorange'
-  if verschil < -4:
-    return 'orangered'
-  if verschil == 1:
-    return 'lightblue'
-  if verschil == 2:
-    return 'lightskyblue'
-  if verschil == 3:
-    return 'deepskyblue'
-  if verschil == 4:
-    return 'dodgerblue'
-  if verschil > 4:
-    return 'royalblue'
+  verschil = max1 - max0
+  if verschil > 0:
+    return bepaaltoenamekleur(verschil)
+  if verschil < 0:
+    return bepaalafnamekleur(-verschil)
   return 'lawngreen'
 
 
