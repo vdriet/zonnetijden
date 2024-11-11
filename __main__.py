@@ -119,7 +119,7 @@ def getwaterinfo():
 
 
 def bepaaltoenamekleur(verschil):
-  """ bepaal kleur bij toename van temperatuur """
+  """ Bepaal kleur bij toename van temperatuur """
   if verschil == 1:
     return 'yellow'
   if verschil == 2:
@@ -132,6 +132,7 @@ def bepaaltoenamekleur(verschil):
 
 
 def bepaalafnamekleur(verschil):
+  """ Bepaal kleur bij afname van temperatuur """
   if verschil == -1:
     return 'lightblue'
   if verschil == -2:
@@ -144,7 +145,7 @@ def bepaalafnamekleur(verschil):
 
 
 def bepaalkleur(max0, max1):
-  """ bepaal achtergrondkleur voor de temperatuur """
+  """ Bepaal achtergrondkleur voor de temperatuur """
   verschil = max1 - max0
   if verschil > 0:
     return bepaaltoenamekleur(verschil)
