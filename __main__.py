@@ -155,6 +155,7 @@ def bepaalkleur(max0, max1):
 
 
 def bepaalwaterkleur(waterstand, waterstandmorgen):
+  """ bepaal de kleuren van de waterstand """
   if waterstandmorgen > waterstand:
     return 'lightblue', 'dodgerblue'
   return 'dodgerblue', 'lightblue'
@@ -169,13 +170,9 @@ def weerget():
   weerinfo = getweerinfo()
   waterinfo = getwaterinfo()
   max0 = weerinfo['wk_verw'][0]['max_temp']
-  min0 = weerinfo['wk_verw'][0]['min_temp']
   max1 = weerinfo['wk_verw'][1]['max_temp']
-  min1 = weerinfo['wk_verw'][1]['min_temp']
   max2 = weerinfo['wk_verw'][2]['max_temp']
-  min2 = weerinfo['wk_verw'][2]['min_temp']
   max3 = weerinfo['wk_verw'][3]['max_temp']
-  min3 = weerinfo['wk_verw'][3]['min_temp']
   waterstand = waterinfo['hoogtenu']
   waterstandmorgen = waterinfo['hoogtemorgen']
   gegevens['kleur'] = 'lawngreen'
@@ -189,15 +186,15 @@ def weerget():
   gegevens['windr'] = weerinfo['liveweer'][0]['windr']
   gegevens['windbft'] = weerinfo['liveweer'][0]['windbft']
   gegevens['max0'] = max0
-  gegevens['min0'] = min0
+  gegevens['min0'] = weerinfo['wk_verw'][0]['min_temp']
   gegevens['max1'] = max1
-  gegevens['min1'] = min1
+  gegevens['min1'] = weerinfo['wk_verw'][1]['min_temp']
   gegevens['kleur1'] = bepaalkleur(max0, max1)
   gegevens['max2'] = max2
-  gegevens['min2'] = min2
+  gegevens['min2'] = weerinfo['wk_verw'][2]['min_temp']
   gegevens['kleur2'] = bepaalkleur(max0, max2)
   gegevens['max3'] = max3
-  gegevens['min3'] = min3
+  gegevens['min3'] = weerinfo['wk_verw'][3]['min_temp']
   gegevens['kleur3'] = bepaalkleur(max0, max3)
   gegevens['bron'] = weerinfo['api'][0]['bron']
   gegevens['waterstand'] = waterstand
