@@ -150,8 +150,14 @@ def bepaalkleur(max0, max1):
   if verschil > 0:
     return bepaaltoenamekleur(verschil)
   if verschil < 0:
-    return bepaalafnamekleur(-verschil)
+    return bepaalafnamekleur(verschil)
   return 'lawngreen'
+
+
+def bepaalwaterkleur(waterstand, waterstandmorgen):
+  if waterstandmorgen > waterstand:
+    return 'lightblue', 'dodgerblue'
+  return 'dodgerblue', 'lightblue'
 
 
 @app.route('/weer', methods=['GET'])
@@ -170,6 +176,8 @@ def weerget():
   min2 = weerinfo['wk_verw'][2]['min_temp']
   max3 = weerinfo['wk_verw'][3]['max_temp']
   min3 = weerinfo['wk_verw'][3]['min_temp']
+  waterstand = waterinfo['hoogtenu']
+  waterstandmorgen = waterinfo['hoogtemorgen']
   gegevens['kleur'] = 'lawngreen'
   gegevens['dag'] = vandaag.strftime('%-d')
   gegevens['weekdag'] = vandaag.strftime('%A')
@@ -192,8 +200,11 @@ def weerget():
   gegevens['min3'] = min3
   gegevens['kleur3'] = bepaalkleur(max0, max3)
   gegevens['bron'] = weerinfo['api'][0]['bron']
-  gegevens['waterstand'] = waterinfo['hoogtenu']
-  gegevens['waterstandmorgen'] = waterinfo['hoogtemorgen']
+  gegevens['waterstand'] = waterstand
+  gegevens['waterstandmorgen'] = waterstandmorgen
+  waterkleur1, waterkleur2 = bepaalwaterkleur(waterstand, waterstandmorgen)
+  gegevens['waterkleur1'] = waterkleur1
+  gegevens['waterkleur2'] = waterkleur2
   return render_template('weer.html', plaats='Hattem', gegevens=gegevens)
 
 

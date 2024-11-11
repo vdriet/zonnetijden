@@ -1,4 +1,4 @@
-<html>
+<html lang="nl">
  <head>
   <title>Vandaag in {{plaats}}</title>
   <style>
@@ -7,7 +7,7 @@
      width: 350px;
      grid-template-columns: 1fr 1fr 1fr 1fr;
      grid-template-rows: 4fr 10fr 3fr 3fr 6fr 1fr;
-     gap: 0px 0px;
+     gap: 0 0;
      grid-auto-flow: row;
      grid-template-areas:
        "weekdag samenvatting samenvatting wind"
@@ -19,7 +19,10 @@
    }
    .weekdag {
      grid-area: weekdag;
-     border-radius: 20px 0px 0px 0px;
+     border-top-right-radius: 0;
+     border-top-left-radius: 20;
+     border-bottom-right-radius: 0;
+     border-bottom-left-radius: 0;
      text-align: center;
      background: {{gegevens['kleur']}};
    }
@@ -28,10 +31,10 @@
      background: {{gegevens['kleur']}};
    }
    .wind {
-     text-align: center;
      grid-area: wind;
-     border-radius: 0px 20px 0px 0px;
      background: {{gegevens['kleur']}};
+     text-align: center;
+     border-radius: 0 20 0 0;
    }
    .dagnummer {
      grid-area: dagnummer;
@@ -52,19 +55,19 @@
    }
    .maand {
      grid-area: maand;
-     text-align: center;
      background: {{gegevens['kleur']}};
+     text-align: center;
    }
    .waterstand {
      grid-area: waterstand;
+     background: linear-gradient(90deg, {{gegevens['waterkleur1']}}, {{gegevens['waterkleur2']}} );
      text-align: center;
-     background: {{gegevens['kleur']}};
      font-size: 15;
    }
    .zon {
      grid-area: zon;
-     text-align: center;
      background: {{gegevens['kleur']}};
+     text-align: center;
      font-size: 14;
    }
    .daglengte {
@@ -75,30 +78,30 @@
    }
    .gevoeltemp {
      grid-area: gevoeltemp;
-     text-align: center;
      background: {{gegevens['kleur']}};
+     text-align: center;
    }
    .verw0 {
      grid-area: verw0;
-     border-radius: 0px 0px 0px 20px;
-     text-align: center;
      background: linear-gradient(90deg, {{gegevens['kleur']}} 0%, {{gegevens['kleur']}} 50%, {{gegevens['kleur1']}} 100%);
+     border-radius: 0 0 0 20;
+     text-align: center;
    }
    .verw1 {
      grid-area: verw1;
-     text-align: center;
      background: linear-gradient(90deg, {{gegevens['kleur1']}} 0%, {{gegevens['kleur1']}} 75%, {{gegevens['kleur2']}} 100%);
+     text-align: center;
    }
    .verw2 {
      grid-area: verw2;
-     text-align: center;
      background: linear-gradient(90deg, {{gegevens['kleur2']}} 0%, {{gegevens['kleur3']}} 50%, {{gegevens['kleur3']}} 100%);
+     text-align: center;
    }
    .verw3 {
      grid-area: verw3;
-     border-radius: 0px 0px 20px 0px;
-     text-align: center;
      background: linear-gradient(90deg, {{gegevens['kleur3']}} 0%, {{gegevens['kleur3']}} 25%, {{gegevens['kleur']}} 100%);
+     border-radius: 0 0 20 0;
+     text-align: center;
    }
    .bron {
      grid-area: bron;
