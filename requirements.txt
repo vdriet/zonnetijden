@@ -8,7 +8,7 @@ Jinja2==3.1.4
 MarkupSafe==3.0.2
 pip==24.3.1
 pytz==2024.2
-setuptools==75.4.0
+setuptools==75.5.0
 waitress==3.0.1
 waterstand==0.1.0
 Werkzeug==3.1.3
