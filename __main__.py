@@ -173,6 +173,7 @@ def weerget():
   max1 = weerinfo['wk_verw'][1]['max_temp']
   max2 = weerinfo['wk_verw'][2]['max_temp']
   max3 = weerinfo['wk_verw'][3]['max_temp']
+  max4 = weerinfo['wk_verw'][4]['max_temp']
   waterstand = waterinfo['hoogtenu']
   waterstandmorgen = waterinfo['hoogtemorgen']
   gegevens['kleur'] = 'lawngreen'
@@ -196,6 +197,7 @@ def weerget():
   gegevens['max3'] = max3
   gegevens['min3'] = weerinfo['wk_verw'][3]['min_temp']
   gegevens['kleur3'] = bepaalkleur(max0, max3)
+  gegevens['kleur4'] = bepaalkleur(max0, max4)
   gegevens['bron'] = weerinfo['api'][0]['bron']
   gegevens['waterstand'] = waterstand
   gegevens['waterstandmorgen'] = waterstandmorgen
