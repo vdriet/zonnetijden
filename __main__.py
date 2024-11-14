@@ -155,7 +155,7 @@ def bepaalkleur(max0, max1):
 
 
 def bepaalwaterkleur(waterstand, waterstandmorgen):
-  """ bepaal de kleuren van de waterstand """
+  """ Bepaal de kleuren van de waterstand """
   if waterstandmorgen > waterstand:
     return 'lightblue', 'dodgerblue'
   return 'dodgerblue', 'lightblue'

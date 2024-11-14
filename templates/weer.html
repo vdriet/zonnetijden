@@ -19,7 +19,7 @@
    }
    .weekdag {
      grid-area: weekdag;
-     border-radius: 20 0 0 0;
+     border-radius: 20px 0 0 0;
      text-align: center;
      background: {{gegevens['kleur']}};
    }
@@ -31,7 +31,7 @@
      grid-area: wind;
      background: {{gegevens['kleur']}};
      text-align: center;
-     border-radius: 0 20 0 0;
+     border-radius: 0 20px 0 0;
    }
    .dagnummer {
      grid-area: dagnummer;
@@ -81,7 +81,7 @@
    .verw0 {
      grid-area: verw0;
      background: linear-gradient(90deg, {{gegevens['kleur']}} 0%, {{gegevens['kleur']}} 75%, {{gegevens['kleur1']}} 100%);
-     border-radius: 0 0 0 20;
+     border-radius: 0 0 0 20px;
      text-align: center;
    }
    .verw1 {
@@ -97,7 +97,7 @@
    .verw3 {
      grid-area: verw3;
      background: linear-gradient(90deg, {{gegevens['kleur3']}} 0%, {{gegevens['kleur3']}} 75%, {{gegevens['kleur4']}} 100%);
-     border-radius: 0 0 20 0;
+     border-radius: 0 0 20px 0;
      text-align: center;
    }
    .bron {
@@ -123,7 +123,7 @@
    <div class="verw1">{{gegevens['min1']}} / {{gegevens['max1']}}</div>
    <div class="verw2">{{gegevens['min2']}} / {{gegevens['max2']}}</div>
    <div class="verw3">{{gegevens['min3']}} / {{gegevens['max3']}}</div>
-   <div class="bron">{{gegevens['bron']}}</div>
+   <div class="bron">{{gegevens['bron']}} & waterinfo RWS</div>
   </div>
  </body>
 </html>
