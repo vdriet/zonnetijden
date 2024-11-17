@@ -169,6 +169,8 @@ def weerget():
   gegevens = getinfohattem(str(vandaag))
   weerinfo = getweerinfo()
   waterinfo = getwaterinfo()
+  temp = weerinfo['liveweer'][0]['temp']
+  gtemp = weerinfo['liveweer'][0]['gtemp']
   max0 = weerinfo['wk_verw'][0]['max_temp']
   max1 = weerinfo['wk_verw'][1]['max_temp']
   max2 = weerinfo['wk_verw'][2]['max_temp']
@@ -176,12 +178,14 @@ def weerget():
   max4 = weerinfo['wk_verw'][4]['max_temp']
   waterstand = waterinfo['hoogtenu']
   waterstandmorgen = waterinfo['hoogtemorgen']
+  waterkleur1, waterkleur2 = bepaalwaterkleur(waterstand, waterstandmorgen)
   gegevens['kleur'] = 'lawngreen'
   gegevens['dag'] = vandaag.strftime('%-d')
   gegevens['weekdag'] = vandaag.strftime('%A')
   gegevens['maand'] = vandaag.strftime('%B')
-  gegevens['temp'] = weerinfo['liveweer'][0]['temp']
-  gegevens['gtemp'] = weerinfo['liveweer'][0]['gtemp']
+  gegevens['temp'] = temp
+  gegevens['gtemp'] = gtemp
+  gegevens['gevoelskleur'] = bepaalkleur(int(temp), int(gtemp))
   gegevens['samenv'] = weerinfo['liveweer'][0]['samenv']
   gegevens['verw'] = weerinfo['liveweer'][0]['verw']
   gegevens['windr'] = weerinfo['liveweer'][0]['windr']
@@ -201,7 +205,6 @@ def weerget():
   gegevens['bron'] = weerinfo['api'][0]['bron']
   gegevens['waterstand'] = waterstand
   gegevens['waterstandmorgen'] = waterstandmorgen
-  waterkleur1, waterkleur2 = bepaalwaterkleur(waterstand, waterstandmorgen)
   gegevens['waterkleur1'] = waterkleur1
   gegevens['waterkleur2'] = waterkleur2
   return render_template('weer.html', plaats='Hattem', gegevens=gegevens)
