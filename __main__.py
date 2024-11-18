@@ -161,6 +161,13 @@ def bepaalwaterkleur(waterstand, waterstandmorgen):
   return 'dodgerblue', 'lightblue'
 
 
+def bepaaldagerbij():
+  """ bepaal of de verwachting van vandaag of morgen de basis zijn """
+  if datetime.datetime.now().hour > 15:
+    return 1
+  return 0
+
+
 @app.route('/weer', methods=['GET'])
 def weerget():
   """ Genereer de pagina met het weer en de zon van vandaag in Hattem """
@@ -171,10 +178,11 @@ def weerget():
   waterinfo = getwaterinfo()
   temp = weerinfo['liveweer'][0]['temp']
   gtemp = weerinfo['liveweer'][0]['gtemp']
-  max0 = weerinfo['wk_verw'][0]['max_temp']
-  max1 = weerinfo['wk_verw'][1]['max_temp']
-  max2 = weerinfo['wk_verw'][2]['max_temp']
-  max3 = weerinfo['wk_verw'][3]['max_temp']
+  dagoffset = bepaaldagerbij()
+  max0 = weerinfo['wk_verw'][0 + dagoffset]['max_temp']
+  max1 = weerinfo['wk_verw'][1 + dagoffset]['max_temp']
+  max2 = weerinfo['wk_verw'][2 + dagoffset]['max_temp']
+  max3 = weerinfo['wk_verw'][3 + dagoffset]['max_temp']
   max4 = weerinfo['wk_verw'][4]['max_temp']
   waterstand = waterinfo['hoogtenu']
   waterstandmorgen = waterinfo['hoogtemorgen']
@@ -191,15 +199,15 @@ def weerget():
   gegevens['windr'] = weerinfo['liveweer'][0]['windr']
   gegevens['windbft'] = weerinfo['liveweer'][0]['windbft']
   gegevens['max0'] = max0
-  gegevens['min0'] = weerinfo['wk_verw'][0]['min_temp']
+  gegevens['min0'] = weerinfo['wk_verw'][0 + dagoffset]['min_temp']
   gegevens['max1'] = max1
-  gegevens['min1'] = weerinfo['wk_verw'][1]['min_temp']
+  gegevens['min1'] = weerinfo['wk_verw'][1 + dagoffset]['min_temp']
   gegevens['kleur1'] = bepaalkleur(max0, max1)
   gegevens['max2'] = max2
-  gegevens['min2'] = weerinfo['wk_verw'][2]['min_temp']
+  gegevens['min2'] = weerinfo['wk_verw'][2 + dagoffset]['min_temp']
   gegevens['kleur2'] = bepaalkleur(max0, max2)
   gegevens['max3'] = max3
-  gegevens['min3'] = weerinfo['wk_verw'][3]['min_temp']
+  gegevens['min3'] = weerinfo['wk_verw'][3 + dagoffset]['min_temp']
   gegevens['kleur3'] = bepaalkleur(max0, max3)
   gegevens['kleur4'] = bepaalkleur(max0, max4)
   gegevens['bron'] = weerinfo['api'][0]['bron']
