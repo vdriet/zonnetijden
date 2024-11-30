@@ -17,7 +17,7 @@ from cachetools import cached, TTLCache
 import pytz
 import waitress
 
-from waterstand import haalwaterstand
+from waterstand import waterstand
 
 app = Flask(__name__)
 weerapikey = os.environ['WEER_API_KEY']
@@ -111,9 +111,11 @@ def getweerinfo():
 @cached(watercache)
 def getwaterinfo():
   """ Haal de gegevens van de waterstand bij Zwolle op """
-  waterstand = haalwaterstand('Katerveer', 'KATV')
-  result = {'hoogtenu': int(waterstand['nu']),
-            'hoogtemorgen': int(waterstand['morgen'])
+  stand = waterstand.haalwaterstand('Katerveer', 'KATV')
+  if isinstance(stand, str):
+    return {}
+  result = {'hoogtenu': int(stand['nu']),
+            'hoogtemorgen': int(stand['morgen'])
             }
   return result
 
@@ -154,9 +156,9 @@ def bepaalkleur(max0, max1):
   return 'lawngreen'
 
 
-def bepaalwaterkleur(waterstand, waterstandmorgen):
+def bepaalwaterkleur(stand, waterstandmorgen):
   """ Bepaal de kleuren van de waterstand """
-  if waterstandmorgen > waterstand:
+  if waterstandmorgen > stand:
     return 'lightblue', 'dodgerblue'
   return 'dodgerblue', 'lightblue'
 
@@ -176,6 +178,15 @@ def weerget():
   gegevens = getinfohattem(str(vandaag))
   weerinfo = getweerinfo()
   waterinfo = getwaterinfo()
+  if not waterinfo:
+    stand = '-'
+    waterstandmorgen = '-'
+    waterkleur1 = 'red'
+    waterkleur2 = 'red'
+  else:
+    stand = waterinfo['hoogtenu']
+    waterstandmorgen = waterinfo['hoogtemorgen']
+    waterkleur1, waterkleur2 = bepaalwaterkleur(stand, waterstandmorgen)
   temp = weerinfo['liveweer'][0]['temp']
   gtemp = weerinfo['liveweer'][0]['gtemp']
   max0 = weerinfo['wk_verw'][0 + bepaaldagerbij()]['max_temp']
@@ -183,9 +194,6 @@ def weerget():
   max2 = weerinfo['wk_verw'][2 + bepaaldagerbij()]['max_temp']
   max3 = weerinfo['wk_verw'][3 + bepaaldagerbij()]['max_temp']
   max4 = weerinfo['wk_verw'][4]['max_temp']
-  waterstand = waterinfo['hoogtenu']
-  waterstandmorgen = waterinfo['hoogtemorgen']
-  waterkleur1, waterkleur2 = bepaalwaterkleur(waterstand, waterstandmorgen)
   gegevens['kleur'] = 'lawngreen'
   gegevens['dag'] = vandaag.strftime('%-d')
   gegevens['weekdag'] = vandaag.strftime('%A')
@@ -210,7 +218,7 @@ def weerget():
   gegevens['kleur3'] = bepaalkleur(max0, max3)
   gegevens['kleur4'] = bepaalkleur(max0, max4)
   gegevens['bron'] = weerinfo['api'][0]['bron']
-  gegevens['waterstand'] = waterstand
+  gegevens['waterstand'] = stand
   gegevens['waterstandmorgen'] = waterstandmorgen
   gegevens['waterkleur1'] = waterkleur1
   gegevens['waterkleur2'] = waterkleur2

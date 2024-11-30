@@ -10,5 +10,5 @@ pip==24.3.1
 pytz==2024.2
 setuptools==75.6.0
 waitress==3.0.2
-waterstand==0.1.0
+waterstand==0.1.2
 Werkzeug==3.1.3
