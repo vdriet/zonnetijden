@@ -47,7 +47,7 @@ def formattime(date):
 
 
 def formattimedelta(timedelta):
-  """ Formater het tijdsverschil naar een tijd """
+  """ Formateer het tijdsverschil naar een tijd """
   return str(timedelta).split(".", maxsplit=1)[0]
 
 
