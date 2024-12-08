@@ -1,1 +1,1 @@
-. ./bin/activate
+. ./zonnetijden_venv/bin/activate
