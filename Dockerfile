@@ -16,4 +16,4 @@ COPY /templates/* /usr/src/app/templates/
 
 EXPOSE 8080
 
-CMD [ "python", "-u", "." ]
+CMD [ "python", "-u", "zonnetijden.py" ]
