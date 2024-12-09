@@ -17,7 +17,7 @@ from cachetools import cached, TTLCache
 import pytz
 import waitress
 
-from waterstand import waterstand
+import waterstand
 
 app = Flask(__name__)
 weerapikey = os.environ['WEER_API_KEY']
