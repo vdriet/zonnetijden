@@ -20,7 +20,7 @@ def test_formattime(mock_env_weerapikey):
 
   invoer = datetime.datetime(2024, 12, 7, 19, 2, 37)
   uitvoer = zonnetijden.formattime(invoer)
-  assert uitvoer == '19:02:37'
+  assert uitvoer == '19:02'
 
 def test_formattimedelta(mock_env_weerapikey):
   import zonnetijden
