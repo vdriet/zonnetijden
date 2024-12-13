@@ -43,7 +43,7 @@ def formatdate(date):
 def formattime(date):
   """ Formateer de datum/tijd naar de tijd """
   localdate = date.astimezone(pytz.timezone('Europe/Amsterdam'))
-  return datetime.datetime.strftime(localdate, '%H:%M:%S')
+  return datetime.datetime.strftime(localdate, '%H:%M')
 
 
 def formattimedelta(timedelta):
