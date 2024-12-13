@@ -43,7 +43,7 @@ def formatdate(date):
 def formattime(date):
   """ Formateer de datum/tijd naar de tijd """
   localdate = date.astimezone(pytz.timezone('Europe/Amsterdam'))
-  return datetime.datetime.strftime(localdate, '%H:%M')
+  return datetime.datetime.strftime(localdate, '%H:%M:%S')
 
 
 def formattimedelta(timedelta):
@@ -112,7 +112,7 @@ def getweerinfo():
 def getwaterinfo():
   """ Haal de gegevens van de waterstand bij Zwolle op """
   stand = waterstand.haalwaterstand('Katerveer', 'KATV')
-  if isinstance(stand, str):
+  if stand['resultaat'] == 'NOK':
     return {}
   result = {'hoogtenu': int(stand['nu']),
             'hoogtemorgen': int(stand['morgen'])
