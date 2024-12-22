@@ -44,10 +44,10 @@ def formattime(date, seconds=False):
   """ Formateer de datum/tijd naar de tijd """
   localdate = date.astimezone(pytz.timezone('Europe/Amsterdam'))
   if seconds:
-    format = '%H:%M:%S'
+    formaat = '%H:%M:%S'
   else:
-    format = '%H:%M'
-  return datetime.datetime.strftime(localdate, format)
+    formaat = '%H:%M'
+  return datetime.datetime.strftime(localdate, formaat)
 
 
 def formattimedelta(timedelta):
