@@ -40,10 +40,14 @@ def formatdate(date):
   return datetime.datetime.strftime(localdate, '%Y-%m-%d')
 
 
-def formattime(date):
+def formattime(date, seconds=False):
   """ Formateer de datum/tijd naar de tijd """
   localdate = date.astimezone(pytz.timezone('Europe/Amsterdam'))
-  return datetime.datetime.strftime(localdate, '%H:%M')
+  if seconds:
+    format = '%H:%M:%S'
+  else:
+    format = '%H:%M'
+  return datetime.datetime.strftime(localdate, format)
 
 
 def formattimedelta(timedelta):
@@ -61,22 +65,22 @@ def berekenzonnetijden(datum, plaats, lat, lon):
   return sun(city.observer, date=datetime.date(jaar, maand, dag), tzinfo=city.timezone)
 
 
-def getinfo(datum, plaats, lat, lon):
+def getinfo(datum, plaats, lat, lon, seconds=False):
   """ Haal de informatie van de zon op gegeven datum en plaats """
   res = berekenzonnetijden(datum, plaats, lat, lon)
 
   opkomst = res['sunrise']
   onder = res['sunset']
   result = {'datum': formatdate(opkomst),
-            'op': formattime(opkomst),
-            'onder': formattime(onder),
+            'op': formattime(opkomst, seconds),
+            'onder': formattime(onder, seconds),
             'daglengte': formattimedelta(onder - opkomst)}
   return result
 
 
-def getinfohattem(datum):
+def getinfohattem(datum, seconds=False):
   """ Haal de gegevens van Hattem op de gegeven datum """
-  return getinfo(datum, 'Hattem', 52.479108, 6.060676)
+  return getinfo(datum, 'Hattem', 52.479108, 6.060676, seconds)
 
 
 @app.route('/vandaag', methods=['GET'])
@@ -175,7 +179,7 @@ def weerget():
   """ Genereer de pagina met het weer en de zon van vandaag in Hattem """
   locale.setlocale(locale.LC_TIME, 'nl_NL.UTF-8')
   vandaag = datetime.date.today()
-  gegevens = getinfohattem(str(vandaag))
+  gegevens = getinfohattem(str(vandaag), True)
   weerinfo = getweerinfo()
   waterinfo = getwaterinfo()
   if not waterinfo:
@@ -260,7 +264,7 @@ def zonget():
   vandaag = datetime.date.today()
   for i in range(terug, vooruit):
     dag = vandaag + datetime.timedelta(i)
-    gegevens.append(getinfo(str(dag), plaats, lat, lon))
+    gegevens.append(getinfo(str(dag), plaats, lat, lon, True))
 
   return render_template('vandaag.html', plaats=plaats, rows=gegevens)
 
