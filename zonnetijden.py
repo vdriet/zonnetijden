@@ -3,21 +3,15 @@ import datetime
 import json
 import locale
 import os
-
 from urllib.request import urlopen, Request
-
-from astral import LocationInfo
-from astral.sun import sun
-
-from flask import Flask, render_template
-from flask import request
-
-from cachetools import cached, TTLCache
 
 import pytz
 import waitress
-
 import waterstand
+from astral import LocationInfo
+from astral.sun import sun
+from cachetools import cached, TTLCache
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 weerapikey = os.environ['WEER_API_KEY']
