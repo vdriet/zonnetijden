@@ -179,7 +179,7 @@ def weerget():
   """ Genereer de pagina met het weer en de zon van vandaag in Hattem """
   locale.setlocale(locale.LC_TIME, 'nl_NL.UTF-8')
   vandaag = datetime.date.today()
-  gegevens = getinfohattem(str(vandaag), True)
+  gegevens = getinfohattem(str(vandaag))
   weerinfo = getweerinfo()
   waterinfo = getwaterinfo()
   if not waterinfo:
