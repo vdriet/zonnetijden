@@ -19,7 +19,7 @@ weercache = TTLCache(maxsize=1, ttl=300)
 watercache = TTLCache(maxsize=1, ttl=7200)
 
 
-def leesjson(url):
+def leesjson(url): # pragma: no cover
   """ Haal JSON van de URL op """
   req = Request(url=url)
   with urlopen(req) as response:
@@ -99,7 +99,7 @@ def vandaagget():
 
 
 @cached(weercache)
-def getweerinfo():
+def getweerinfo(): # pragma: no cover
   """ Haal de gegevens van het weer van Hattem op """
   url = f'https://weerlive.nl/api/weerlive_api_v2.php?key={weerapikey}&locatie=Hattem'
   weerinfo = leesjson(url)

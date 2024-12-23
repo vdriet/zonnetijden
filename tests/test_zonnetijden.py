@@ -47,3 +47,37 @@ def test_berekenzonnetijden():
   verwachting = {'daglengte': '7:38:43', 'datum': '2024-12-21', 'onder': '16:23', 'op': '08:44'}
   resultaat = zonnetijden.getinfohattem('2024-12-21')
   assert resultaat == verwachting
+
+
+def test_bepaaltoenamekleur():
+  import zonnetijden
+  assert zonnetijden.bepaaltoenamekleur(0) == 'orangered'
+  assert zonnetijden.bepaaltoenamekleur(1) == 'yellow'
+  assert zonnetijden.bepaaltoenamekleur(2) == 'gold'
+  assert zonnetijden.bepaaltoenamekleur(3) == 'orange'
+  assert zonnetijden.bepaaltoenamekleur(4) == 'darkorange'
+  assert zonnetijden.bepaaltoenamekleur(5) == 'orangered'
+
+
+def test_bepaalafnamekleur():
+  import zonnetijden
+  assert zonnetijden.bepaalafnamekleur(0) == 'royalblue'
+  assert zonnetijden.bepaalafnamekleur(-1) == 'lightblue'
+  assert zonnetijden.bepaalafnamekleur(-2) == 'lightskyblue'
+  assert zonnetijden.bepaalafnamekleur(-3) == 'deepskyblue'
+  assert zonnetijden.bepaalafnamekleur(-4) == 'dodgerblue'
+  assert zonnetijden.bepaalafnamekleur(-5) == 'royalblue'
+
+
+def test_bepaalkleur():
+  import zonnetijden
+  assert zonnetijden.bepaalkleur(1, 1) == 'lawngreen'
+  assert zonnetijden.bepaalkleur(0, 1) == 'yellow'
+  assert zonnetijden.bepaalkleur(1, 0) == 'lightblue'
+
+
+def test_bepaalwaterkleur():
+  import zonnetijden
+  assert zonnetijden.bepaalwaterkleur(0, 1) == ('lightblue', 'dodgerblue')
+  assert zonnetijden.bepaalwaterkleur(1, 0) == ('dodgerblue', 'lightblue')
+  assert zonnetijden.bepaalwaterkleur(1, 1) == ('dodgerblue', 'lightblue')
