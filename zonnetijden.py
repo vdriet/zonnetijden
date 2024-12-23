@@ -238,17 +238,18 @@ def zonget():
 
   try:
     int(argterug)
-  except TypeError:
+  except (TypeError, ValueError):
     print('standaard terug 10')
     argterug = '10'
   terug = -1 * int(argterug)
 
   try:
     int(argvooruit)
-  except TypeError:
+  except (TypeError, ValueError):
     print('standaard vooruit 50')
     argvooruit = '50'
   vooruit = int(argvooruit)
+
   if plaats == 'Zwolle':
     lat = 52.537563
     lon = 6.11083
@@ -263,5 +264,5 @@ def zonget():
   return render_template('vandaag.html', plaats=plaats, rows=gegevens)
 
 
-if __name__ == '__main__':
+if __name__ == '__main__': # pragma: no cover
   waitress.serve(app, host="0.0.0.0", port=8083)
