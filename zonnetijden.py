@@ -3,6 +3,7 @@ import datetime
 import json
 import locale
 import os
+from urllib.error import URLError
 from urllib.request import urlopen, Request
 
 import pytz
@@ -19,7 +20,7 @@ weercache = TTLCache(maxsize=1, ttl=300)
 watercache = TTLCache(maxsize=1, ttl=7200)
 
 
-def leesjson(url): # pragma: no cover
+def leesjson(url):  # pragma: no cover
   """ Haal JSON van de URL op """
   req = Request(url=url)
   with urlopen(req) as response:
@@ -99,10 +100,15 @@ def vandaagget():
 
 
 @cached(weercache)
-def getweerinfo(): # pragma: no cover
-  """ Haal de gegevens van het weer van Hattem op """
-  url = f'https://weerlive.nl/api/weerlive_api_v2.php?key={weerapikey}&locatie=Hattem'
-  weerinfo = leesjson(url)
+def getweerinfo():  # pragma: no cover
+  """ Haal de informatie van het weer van Hattem op """
+  try:
+    url = f'https://weerlive.nl/api/weerlive_api_v2.php?key={weerapikey}&locatie=Hattem'
+    weerinfo = leesjson(url)
+    if weerinfo and weerinfo.get('liveweer', None) and weerinfo.get('liveweer')[0].get('fout'):
+      return None
+  except URLError:
+    return None
   return weerinfo
 
 
@@ -168,13 +174,48 @@ def bepaaldagerbij():
   return 0
 
 
+def getweergegevens():
+  """ Haal de gegevens van het weer van Hattem op """
+  weerinfo = getweerinfo()
+  gegevens = {}
+  if weerinfo:
+    temp = weerinfo['liveweer'][0]['temp']
+    gtemp = weerinfo['liveweer'][0]['gtemp']
+    max0 = weerinfo['wk_verw'][0 + bepaaldagerbij()]['max_temp']
+    max1 = weerinfo['wk_verw'][1 + bepaaldagerbij()]['max_temp']
+    max2 = weerinfo['wk_verw'][2 + bepaaldagerbij()]['max_temp']
+    max3 = weerinfo['wk_verw'][3 + bepaaldagerbij()]['max_temp']
+    max4 = weerinfo['wk_verw'][4]['max_temp']
+    gegevens['temp'] = temp
+    gegevens['gtemp'] = gtemp
+    gegevens['gevoelskleur'] = bepaalkleur(int(temp), int(gtemp))
+    gegevens['samenv'] = weerinfo['liveweer'][0]['samenv']
+    gegevens['verw'] = weerinfo['liveweer'][0]['verw']
+    gegevens['windr'] = weerinfo['liveweer'][0]['windr']
+    gegevens['windbft'] = weerinfo['liveweer'][0]['windbft']
+    gegevens['max0'] = max0
+    gegevens['min0'] = weerinfo['wk_verw'][0 + bepaaldagerbij()]['min_temp']
+    gegevens['max1'] = max1
+    gegevens['min1'] = weerinfo['wk_verw'][1 + bepaaldagerbij()]['min_temp']
+    gegevens['kleur1'] = bepaalkleur(max0, max1)
+    gegevens['max2'] = max2
+    gegevens['min2'] = weerinfo['wk_verw'][2 + bepaaldagerbij()]['min_temp']
+    gegevens['kleur2'] = bepaalkleur(max0, max2)
+    gegevens['max3'] = max3
+    gegevens['min3'] = weerinfo['wk_verw'][3 + bepaaldagerbij()]['min_temp']
+    gegevens['kleur3'] = bepaalkleur(max0, max3)
+    gegevens['kleur4'] = bepaalkleur(max0, max4)
+    gegevens['bron'] = weerinfo['api'][0]['bron']
+  return gegevens
+
+
 @app.route('/weer', methods=['GET'])
 def weerget():
   """ Genereer de pagina met het weer en de zon van vandaag in Hattem """
   locale.setlocale(locale.LC_TIME, 'nl_NL.UTF-8')
   vandaag = datetime.date.today()
   gegevens = getinfohattem(str(vandaag))
-  weerinfo = getweerinfo()
+  gegevens = gegevens | getweergegevens()
   waterinfo = getwaterinfo()
   if not waterinfo:
     stand = '-'
@@ -185,37 +226,10 @@ def weerget():
     stand = waterinfo['hoogtenu']
     waterstandmorgen = waterinfo['hoogtemorgen']
     waterkleur1, waterkleur2 = bepaalwaterkleur(stand, waterstandmorgen)
-  temp = weerinfo['liveweer'][0]['temp']
-  gtemp = weerinfo['liveweer'][0]['gtemp']
-  max0 = weerinfo['wk_verw'][0 + bepaaldagerbij()]['max_temp']
-  max1 = weerinfo['wk_verw'][1 + bepaaldagerbij()]['max_temp']
-  max2 = weerinfo['wk_verw'][2 + bepaaldagerbij()]['max_temp']
-  max3 = weerinfo['wk_verw'][3 + bepaaldagerbij()]['max_temp']
-  max4 = weerinfo['wk_verw'][4]['max_temp']
   gegevens['kleur'] = 'lawngreen'
   gegevens['dag'] = vandaag.strftime('%-d')
   gegevens['weekdag'] = vandaag.strftime('%A')
   gegevens['maand'] = vandaag.strftime('%B')
-  gegevens['temp'] = temp
-  gegevens['gtemp'] = gtemp
-  gegevens['gevoelskleur'] = bepaalkleur(int(temp), int(gtemp))
-  gegevens['samenv'] = weerinfo['liveweer'][0]['samenv']
-  gegevens['verw'] = weerinfo['liveweer'][0]['verw']
-  gegevens['windr'] = weerinfo['liveweer'][0]['windr']
-  gegevens['windbft'] = weerinfo['liveweer'][0]['windbft']
-  gegevens['max0'] = max0
-  gegevens['min0'] = weerinfo['wk_verw'][0 + bepaaldagerbij()]['min_temp']
-  gegevens['max1'] = max1
-  gegevens['min1'] = weerinfo['wk_verw'][1 + bepaaldagerbij()]['min_temp']
-  gegevens['kleur1'] = bepaalkleur(max0, max1)
-  gegevens['max2'] = max2
-  gegevens['min2'] = weerinfo['wk_verw'][2 + bepaaldagerbij()]['min_temp']
-  gegevens['kleur2'] = bepaalkleur(max0, max2)
-  gegevens['max3'] = max3
-  gegevens['min3'] = weerinfo['wk_verw'][3 + bepaaldagerbij()]['min_temp']
-  gegevens['kleur3'] = bepaalkleur(max0, max3)
-  gegevens['kleur4'] = bepaalkleur(max0, max4)
-  gegevens['bron'] = weerinfo['api'][0]['bron']
   gegevens['waterstand'] = stand
   gegevens['waterstandmorgen'] = waterstandmorgen
   gegevens['waterkleur1'] = waterkleur1
@@ -264,5 +278,5 @@ def zonget():
   return render_template('vandaag.html', plaats=plaats, rows=gegevens)
 
 
-if __name__ == '__main__': # pragma: no cover
+if __name__ == '__main__':  # pragma: no cover
   waitress.serve(app, host="0.0.0.0", port=8083)
