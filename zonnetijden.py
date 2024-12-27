@@ -109,7 +109,9 @@ def getweerinfo():  # pragma: no cover
   """ Haal de informatie van het weer van Hattem op """
   url = f'https://weerlive.nl/api/weerlive_api_v2.php?key={weerapikey}&locatie=Hattem'
   weerinfo = leesjson(url)
-  if weerinfo and weerinfo.get('liveweer', None) and weerinfo.get('liveweer')[0].get('fout'):
+  if weerinfo is None or \
+      weerinfo.get('liveweer', None) is None or \
+      weerinfo.get('liveweer')[0].get('fout') is not None:
     return None
   return weerinfo
 
