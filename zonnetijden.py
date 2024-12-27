@@ -3,6 +3,7 @@ import datetime
 import json
 import locale
 import os
+from http.client import InvalidURL
 from urllib.error import URLError
 from urllib.request import urlopen, Request
 
@@ -18,15 +19,19 @@ app = Flask(__name__)
 weerapikey = os.environ['WEER_API_KEY']
 weercache = TTLCache(maxsize=1, ttl=300)
 watercache = TTLCache(maxsize=1, ttl=7200)
+locatiecache = TTLCache(maxsize=10, ttl=86400)
 
 
 def leesjson(url):  # pragma: no cover
   """ Haal JSON van de URL op """
-  req = Request(url=url)
-  with urlopen(req) as response:
-    contenttekst = response.read().decode('utf-8')
-    contentjson = json.loads(contenttekst)
-    return contentjson
+  try:
+    req = Request(url=url)
+    with urlopen(req) as response:
+      contenttekst = response.read().decode('utf-8')
+      contentjson = json.loads(contenttekst)
+      return contentjson
+  except (InvalidURL, URLError, IOError):
+    return None
 
 
 def formatdate(date):
@@ -102,12 +107,9 @@ def vandaagget():
 @cached(weercache)
 def getweerinfo():  # pragma: no cover
   """ Haal de informatie van het weer van Hattem op """
-  try:
-    url = f'https://weerlive.nl/api/weerlive_api_v2.php?key={weerapikey}&locatie=Hattem'
-    weerinfo = leesjson(url)
-    if weerinfo and weerinfo.get('liveweer', None) and weerinfo.get('liveweer')[0].get('fout'):
-      return None
-  except URLError:
+  url = f'https://weerlive.nl/api/weerlive_api_v2.php?key={weerapikey}&locatie=Hattem'
+  weerinfo = leesjson(url)
+  if weerinfo and weerinfo.get('liveweer', None) and weerinfo.get('liveweer')[0].get('fout'):
     return None
   return weerinfo
 
@@ -121,6 +123,21 @@ def getwaterinfo():
   result = {'hoogtenu': int(stand['nu']),
             'hoogtemorgen': int(stand['morgen'])
             }
+  return result
+
+
+@cached(locatiecache)
+def getlocatieinfo(plaatsnaam):
+  """ haal locatie op basis van een (plaats)naam op """
+  url = f'https://api.pdok.nl/bzk/locatieserver/search/v3_1/free?q={plaatsnaam}'
+  locatieinfo = leesjson(url)
+  if locatieinfo is None or \
+      locatieinfo.get('response', None) is None or \
+      int(locatieinfo.get('response').get('numFound', 0)) == 0:
+    return None  # pragma no cover
+  centroide_ll = locatieinfo['response']['docs'][0]['centroide_ll']
+  punten = centroide_ll.replace('POINT(', '').replace(')', '').split(' ')
+  result = {'lat': float(punten[1]), 'lon': float(punten[0])}
   return result
 
 
@@ -253,21 +270,21 @@ def zonget():
   try:
     int(argterug)
   except (TypeError, ValueError):
-    print('standaard terug 10')
     argterug = '10'
   terug = -1 * int(argterug)
 
   try:
     int(argvooruit)
   except (TypeError, ValueError):
-    print('standaard vooruit 50')
     argvooruit = '50'
   vooruit = int(argvooruit)
 
-  if plaats == 'Zwolle':
-    lat = 52.537563
-    lon = 6.11083
+  plaatsgegevens = getlocatieinfo(plaats)
+  if plaatsgegevens:
+    lat = plaatsgegevens['lat']
+    lon = plaatsgegevens['lon']
   else:
+    plaats = 'Hattem (default)'
     lat = 52.479108
     lon = 6.060676
   vandaag = datetime.date.today()

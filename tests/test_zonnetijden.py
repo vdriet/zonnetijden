@@ -81,3 +81,14 @@ def test_bepaalwaterkleur():
   assert zonnetijden.bepaalwaterkleur(0, 1) == ('lightblue', 'dodgerblue')
   assert zonnetijden.bepaalwaterkleur(1, 0) == ('dodgerblue', 'lightblue')
   assert zonnetijden.bepaalwaterkleur(1, 1) == ('dodgerblue', 'lightblue')
+
+
+def test_locatieinfo():
+  import zonnetijden
+  resulthattem = {'lat': 52.47477964, 'lon': 6.05326318}
+  assert zonnetijden.getlocatieinfo('Hattem') == resulthattem
+  resultpostcode = {'lat': 52.46485473, 'lon': 6.06869468}
+  assert zonnetijden.getlocatieinfo('8051AA') == resultpostcode
+  resultzwolle = {'lat': 52.51868565, 'lon': 6.11836361}
+  assert zonnetijden.getlocatieinfo('Zwolle') == resultzwolle
+  assert zonnetijden.getlocatieinfo('123456') is None
