@@ -20,7 +20,7 @@ weercache = TTLCache(maxsize=1, ttl=300)
 watercache = TTLCache(maxsize=1, ttl=7200)
 
 
-def leesjson(url):  # pragma: no cover
+def leesjson(url): # pragma: no cover
   """ Haal JSON van de URL op """
   req = Request(url=url)
   with urlopen(req) as response:
@@ -100,7 +100,7 @@ def vandaagget():
 
 
 @cached(weercache)
-def getweerinfo():  # pragma: no cover
+def getweerinfo(): # pragma: no cover
   """ Haal de informatie van het weer van Hattem op """
   try:
     url = f'https://weerlive.nl/api/weerlive_api_v2.php?key={weerapikey}&locatie=Hattem'
@@ -278,5 +278,5 @@ def zonget():
   return render_template('vandaag.html', plaats=plaats, rows=gegevens)
 
 
-if __name__ == '__main__':  # pragma: no cover
+if __name__ == '__main__':
   waitress.serve(app, host="0.0.0.0", port=8083)
