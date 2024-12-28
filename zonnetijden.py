@@ -136,7 +136,7 @@ def getlocatieinfo(plaatsnaam):
   if locatieinfo is None or \
       locatieinfo.get('response', None) is None or \
       int(locatieinfo.get('response').get('numFound', 0)) == 0:
-    return None  # pragma no cover
+    return None
   centroide_ll = locatieinfo['response']['docs'][0]['centroide_ll']
   punten = centroide_ll.replace('POINT(', '').replace(')', '').split(' ')
   result = {'lat': float(punten[1]), 'lon': float(punten[0])}
