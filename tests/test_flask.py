@@ -151,3 +151,13 @@ def test_zon_fout_default(mock_env_weerapikey, client):
   assert b'<td>2024-12-13</td>' in response.data
   assert b'<td>2025-02-10</td>' in response.data
   assert b'<td>2025-02-11</td>' not in response.data
+
+
+@freeze_time("2024-12-23 13:28:00")
+def test_zon_fout_in_plaats(mock_env_weerapikey, client):
+  response = client.get('/zon?plaats=123456')
+  assert b'<title>Vandaag in Hattem (default)</title>' in response.data
+  assert b'<td>2024-12-12</td>' not in response.data
+  assert b'<td>2024-12-13</td>' in response.data
+  assert b'<td>2025-02-10</td>' in response.data
+  assert b'<td>2025-02-11</td>' not in response.data
