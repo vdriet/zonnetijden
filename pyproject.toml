@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "zonnetijden"
 version = "1.0.0"
 authors = [
-  { name="Peter van de Riet", email="vdriet@gmail.com" },
+    { name = "Peter van de Riet", email = "vdriet@gmail.com" },
 ]
 description = "zonnetijden in Docker"
 readme = "README.md"
@@ -32,6 +32,9 @@ omit = [
 ]
 [tool.coverage.report]
 exclude_lines = [
-  "if __name__ == .__main__.:"
+    "if __name__ == .__main__.:"
 ]
 fail_under = 90
+[tool.pylint]
+init-hook = "import sys; sys.path.append('./lib/python3.11/site-packages/');sys.path.append('.')"
+indent-string = "  "
