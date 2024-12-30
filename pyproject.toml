@@ -26,15 +26,17 @@ Issues = "https://github.com/vdriet/zonnetijden/issues"
 addopts = [
     "--import-mode=importlib",
 ]
+
 [tool.coverage.run]
 omit = [
     "*/tests/*",
 ]
+
 [tool.coverage.report]
 exclude_lines = [
     "if __name__ == .__main__.:"
 ]
 fail_under = 90
+
 [tool.pylint]
-init-hook = "import sys; sys.path.append('./lib/python3.11/site-packages/');sys.path.append('.')"
 indent-string = "  "
