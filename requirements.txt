@@ -28,7 +28,7 @@ pytz==2024.2
 setuptools==75.8.0
 six==1.17.0
 tomlkit==0.13.2
-trove-classifiers==2025.1.7.14
+trove-classifiers==2025.1.10.15
 waitress==3.0.2
 waterstand==1.2.0
 Werkzeug==3.1.3
