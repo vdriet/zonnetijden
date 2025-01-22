@@ -1,6 +1,9 @@
 import datetime
 
 import pytest
+import pytz
+
+tzams = pytz.timezone('Europe/Amsterdam')
 
 
 @pytest.fixture
@@ -11,7 +14,7 @@ def mock_env_weerapikey(monkeypatch):
 def test_formatdate(mock_env_weerapikey):
   import zonnetijden
 
-  invoer = datetime.datetime(2024, 12, 7, 19, 2, 37)
+  invoer = datetime.datetime(2024, 12, 7, 19, 2, 37, tzinfo=tzams)
   uitvoer = zonnetijden.formatdate(invoer)
   assert uitvoer == '2024-12-07'
 
@@ -19,7 +22,7 @@ def test_formatdate(mock_env_weerapikey):
 def test_formattime(mock_env_weerapikey):
   import zonnetijden
 
-  invoer = datetime.datetime(2024, 12, 7, 19, 2, 37)
+  invoer = datetime.datetime(2024, 12, 7, 19, 2, 37, tzinfo=tzams)
   uitvoer = zonnetijden.formattime(invoer)
   assert uitvoer == '19:02'
 
@@ -27,7 +30,7 @@ def test_formattime(mock_env_weerapikey):
 def test_formattimeseconds(mock_env_weerapikey):
   import zonnetijden
 
-  invoer = datetime.datetime(2024, 12, 7, 19, 2, 37)
+  invoer = datetime.datetime(2024, 12, 7, 19, 2, 37, tzinfo=tzams)
   uitvoer = zonnetijden.formattime(invoer, True)
   assert uitvoer == '19:02:37'
 
@@ -35,8 +38,8 @@ def test_formattimeseconds(mock_env_weerapikey):
 def test_formattimedelta(mock_env_weerapikey):
   import zonnetijden
 
-  invoer1 = datetime.datetime(2024, 12, 7, 8, 32, 11)
-  invoer2 = datetime.datetime(2024, 12, 7, 16, 21, 43)
+  invoer1 = datetime.datetime(2024, 12, 7, 8, 32, 11, tzinfo=tzams)
+  invoer2 = datetime.datetime(2024, 12, 7, 16, 21, 43, tzinfo=tzams)
   uitvoer = zonnetijden.formattimedelta(invoer2 - invoer1)
   assert uitvoer == '7:49:32'
 
