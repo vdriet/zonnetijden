@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-pip install --no-cache-dir -r requirements.txt
+pip install --quiet --no-cache-dir -r requirements.txt
 pip list --outdated
 pylint *.py
 coverage run -m pytest

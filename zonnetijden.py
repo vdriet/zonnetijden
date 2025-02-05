@@ -1,13 +1,10 @@
 """ Flexibel opvraagbare tijden van zonsopkomst en -ondergang """
 import datetime
-import json
 import locale
 import os
-from http.client import InvalidURL
-from urllib.error import URLError
-from urllib.request import urlopen, Request
 
 import pytz
+import requests
 import waitress
 import waterstand
 from astral import LocationInfo
@@ -22,15 +19,12 @@ watercache = TTLCache(maxsize=1, ttl=7200)
 locatiecache = TTLCache(maxsize=10, ttl=86400)
 
 
-def leesjson(url): # pragma: no cover
+def leesjson(url):  # pragma: no cover
   """ Haal JSON van de URL op """
   try:
-    req = Request(url=url)
-    with urlopen(req) as response:
-      contenttekst = response.read().decode('utf-8')
-      contentjson = json.loads(contenttekst)
-      return contentjson
-  except (InvalidURL, URLError, IOError):
+    req = requests.get(url, timeout=6, allow_redirects=False)
+    return req.json()
+  except (requests.exceptions.InvalidURL, requests.exceptions.HTTPError, IOError):
     return None
 
 
@@ -105,7 +99,7 @@ def vandaagget():
 
 
 @cached(weercache)
-def getweerinfo(): # pragma: no cover
+def getweerinfo():  # pragma: no cover
   """ Haal de informatie van het weer van Hattem op """
   url = f'https://weerlive.nl/api/weerlive_api_v2.php?key={weerapikey}&locatie=Hattem'
   weerinfo = leesjson(url)
