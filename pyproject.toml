@@ -10,7 +10,7 @@ authors = [
 ]
 description = "zonnetijden in Docker"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3",
