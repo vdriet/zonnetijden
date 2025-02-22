@@ -14,7 +14,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 weerapikey = os.environ['WEER_API_KEY']
-weercache = TTLCache(maxsize=1, ttl=300)
+weercache = TTLCache(maxsize=1, ttl=900)
 watercache = TTLCache(maxsize=1, ttl=7200)
 locatiecache = TTLCache(maxsize=10, ttl=86400)
 
