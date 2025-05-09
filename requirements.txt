@@ -28,7 +28,7 @@ requests==2.32.3
 setuptools==80.3.1
 six==1.17.0
 tomlkit==0.13.2
-trove-classifiers==2025.5.8.15
+trove-classifiers==2025.5.9.12
 waitress==3.0.2
 waterstand==1.2.1
 Werkzeug==3.1.3
