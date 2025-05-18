@@ -30,5 +30,5 @@ six==1.17.0
 tomlkit==0.13.2
 trove-classifiers==2025.5.9.12
 waitress==3.0.2
-waterstand==1.2.1
+waterstand==1.2.2
 Werkzeug==3.1.3
