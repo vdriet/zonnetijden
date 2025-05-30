@@ -2,12 +2,15 @@ astral==3.2
 astroid==3.3.10
 blinker==1.9.0
 cachetools==6.0.0
+certifi==2025.4.26
+charset-normalizer==3.4.2
 click==8.2.1
 coverage==7.8.2
 dill==0.4.0
 Flask==3.1.1
 freezegun==1.5.2
 hatchling==1.27.0
+idna==3.10
 iniconfig==2.1.0
 isort==6.0.1
 itsdangerous==2.2.0
@@ -18,6 +21,7 @@ numpy==2.2.6
 packaging==25.0
 pathspec==0.12.1
 pip==25.1.1
+pip-tools==7.4.1
 platformdirs==4.3.8
 pluggy==1.6.0
 pylint==3.3.7
@@ -29,6 +33,7 @@ setuptools==80.9.0
 six==1.17.0
 tomlkit==0.13.2
 trove-classifiers==2025.5.9.12
+urllib3==2.4.0
 waitress==3.0.2
 waterstand==1.2.2
 Werkzeug==3.1.3

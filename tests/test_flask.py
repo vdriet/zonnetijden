@@ -81,6 +81,7 @@ def test_weer_voor15(mock_waterstand, mock_getweerinfo, mock_env_weerapikey, cle
   assert b'<div class="verw1">3 / 6</div>' in response.data
   assert mock_waterstand.called
 
+
 @patch('zonnetijden.getweerinfo')
 @patch('waterstand.haalwaterstand', return_value={'resultaat': 'OK', 'tijd': '23-11 16:50', 'nu': 84.0, 'morgen': 89.0})
 @freeze_time("2024-11-23 16:50:00")
@@ -97,17 +98,19 @@ def test_weer_na15(mock_waterstand, mock_getweerinfo, mock_env_weerapikey, clear
   assert b'<div class="verw1">3 / 5</div>' in response.data
   assert mock_waterstand.called
 
+
 @patch('zonnetijden.getweerinfo')
 @patch('waterstand.haalwaterstand', return_value={'resultaat': 'OK', 'tijd': '23-11 16:50', 'nu': 84.0, 'morgen': 89.0})
 @freeze_time("2024-11-23 16:50:00")
 def test_weer_geenkey(mock_waterstand, mock_getweerinfo, mock_env_weerapikey, clear_cache, client):
-  mock_getweerinfo.return_value = None
+  mock_getweerinfo.return_value = {}
 
   response = client.get('/weer')
   assert b'<title>Vandaag in Hattem</title>' in response.data
   assert b'<div class="waterstand">84 - 89</div>' in response.data
   assert b'<div class="verw0"> / </div>' in response.data
   assert mock_waterstand.called
+
 
 @patch('zonnetijden.getweerinfo')
 @patch('waterstand.haalwaterstand', return_value={'resultaat': 'NOK', 'tekst': 'fout'})

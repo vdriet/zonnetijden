@@ -94,4 +94,4 @@ def test_locatieinfo():
   assert zonnetijden.getlocatieinfo('8051AA') == resultpostcode
   resultzwolle = {'lat': 52.51868565, 'lon': 6.11836361}
   assert zonnetijden.getlocatieinfo('Zwolle') == resultzwolle
-  assert zonnetijden.getlocatieinfo('123456') is None
+  assert zonnetijden.getlocatieinfo('123456') == {}
