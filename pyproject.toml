@@ -26,6 +26,9 @@ Issues = "https://github.com/vdriet/zonnetijden/issues"
 addopts = [
     "--import-mode=importlib",
 ]
+filterwarnings = [
+    'ignore:System time is way off',
+]
 
 [tool.coverage.run]
 omit = [

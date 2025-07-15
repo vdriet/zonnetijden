@@ -6,7 +6,7 @@
      display: grid;
      width: 350px;
      grid-template-columns: 1fr 1fr 1fr 1fr;
-     grid-template-rows: 4fr 2fr 8fr 3fr 3fr 6fr 1fr;
+     grid-template-rows: 4fr 2fr 8fr 3fr 3fr 2fr 4fr 1fr;
      gap: 0 0;
      grid-auto-flow: row;
      grid-template-areas:
@@ -15,6 +15,7 @@
        "dagnummer weertekst weertekst temperatuur"
        "maand waterstand zon gevoeltemp"
        "maand waterstand daglengte gevoeltemp"
+       "dag0 dag1 dag2 dag3"
        "verw0 verw1 verw2 verw3"
        "bron bron bron bron";
    }
@@ -79,10 +80,22 @@
      background: {{gegevens['gevoelskleur']}};
      text-align: center;
    }
+   .dag0 {
+     grid-area: dag0;
+     background: linear-gradient(90deg, {{gegevens['kleur']}} 0%, {{gegevens['kleur']}} 75%, {{gegevens['kleur1']}} 100%);
+     font-size: 9px;
+     text-align: center;
+   }
    .verw0 {
      grid-area: verw0;
      background: linear-gradient(90deg, {{gegevens['kleur']}} 0%, {{gegevens['kleur']}} 75%, {{gegevens['kleur1']}} 100%);
      border-radius: 0 0 0 20px;
+     text-align: center;
+   }
+   .dag1 {
+     grid-area: dag1;
+     background: linear-gradient(90deg, {{gegevens['kleur1']}} 0%, {{gegevens['kleur1']}} 75%, {{gegevens['kleur2']}} 100%);
+     font-size: 9px;
      text-align: center;
    }
    .verw1 {
@@ -90,9 +103,21 @@
      background: linear-gradient(90deg, {{gegevens['kleur1']}} 0%, {{gegevens['kleur1']}} 75%, {{gegevens['kleur2']}} 100%);
      text-align: center;
    }
+   .dag2 {
+     grid-area: dag2;
+     background: linear-gradient(90deg, {{gegevens['kleur2']}} 0%, {{gegevens['kleur2']}} 75%, {{gegevens['kleur3']}} 100%);
+     font-size: 9px;
+     text-align: center;
+   }
    .verw2 {
      grid-area: verw2;
      background: linear-gradient(90deg, {{gegevens['kleur2']}} 0%, {{gegevens['kleur2']}} 75%, {{gegevens['kleur3']}} 100%);
+     text-align: center;
+   }
+   .dag3 {
+     grid-area: dag3;
+     background: linear-gradient(90deg, {{gegevens['kleur3']}} 0%, {{gegevens['kleur3']}} 75%, {{gegevens['kleur4']}} 100%);
+     font-size: 9px;
      text-align: center;
    }
    .verw3 {
@@ -120,6 +145,10 @@
    <div class="zon">{{gegevens['op']}} - {{gegevens['onder']}}</div>
    <div class="daglengte">{{gegevens['daglengte']}}</div>
    <div class="gevoeltemp">{{gegevens['gtemp']}} °C</div>
+   <div class="dag0">{{gegevens['dag0']}}</div>
+   <div class="dag1">{{gegevens['dag1']}}</div>
+   <div class="dag2">{{gegevens['dag2']}}</div>
+   <div class="dag3">{{gegevens['dag3']}}</div>
    <div class="verw0">{{gegevens['min0']}} / {{gegevens['max0']}}</div>
    <div class="verw1">{{gegevens['min1']}} / {{gegevens['max1']}}</div>
    <div class="verw2">{{gegevens['min2']}} / {{gegevens['max2']}}</div>
