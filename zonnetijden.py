@@ -330,6 +330,19 @@ def bepaaldagerbij() -> int:
   return 0
 
 
+def dagvanafvandaag(aantaldagen) -> str:
+  """
+  Bepaalt de naam van de dag vanaf vandaag
+  Args:
+    aantaldagen: aantal dagen vanaf vandaag
+  Returns:
+    Naam van de berekende dag van de week
+  """
+  gevraagdedag = datetime.date.today() + datetime.timedelta(days=aantaldagen)
+
+  return gevraagdedag.strftime('%A')[0:2]
+
+
 def getweergegevens() -> dict:
   """
   Verzamelt actuele weergegevens voor Hattem.
@@ -354,14 +367,18 @@ def getweergegevens() -> dict:
     gegevens['verw'] = weerinfo['liveweer'][0]['verw']
     gegevens['windr'] = weerinfo['liveweer'][0]['windr']
     gegevens['windbft'] = weerinfo['liveweer'][0]['windbft']
+    gegevens['dag0'] = dagvanafvandaag(bepaaldagerbij())
     gegevens['max0'] = max0
     gegevens['min0'] = weerinfo['wk_verw'][0 + bepaaldagerbij()]['min_temp']
+    gegevens['dag1'] = dagvanafvandaag(1 + bepaaldagerbij())
     gegevens['max1'] = max1
     gegevens['min1'] = weerinfo['wk_verw'][1 + bepaaldagerbij()]['min_temp']
     gegevens['kleur1'] = bepaalkleur(max0, max1)
+    gegevens['dag2'] = dagvanafvandaag(2 + bepaaldagerbij())
     gegevens['max2'] = max2
     gegevens['min2'] = weerinfo['wk_verw'][2 + bepaaldagerbij()]['min_temp']
     gegevens['kleur2'] = bepaalkleur(max0, max2)
+    gegevens['dag3'] = dagvanafvandaag(3 + bepaaldagerbij())
     gegevens['max3'] = max3
     gegevens['min3'] = weerinfo['wk_verw'][3 + bepaaldagerbij()]['min_temp']
     gegevens['kleur3'] = bepaalkleur(max0, max3)
