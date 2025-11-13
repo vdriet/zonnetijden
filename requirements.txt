@@ -1,7 +1,7 @@
 astral==3.2
 astroid==4.0.2
 blinker==1.9.0
-cachetools==6.2.1
+cachetools==6.2.2
 certifi==2025.11.12
 charset-normalizer==3.4.4
 click==8.3.0
