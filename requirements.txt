@@ -36,5 +36,5 @@ tomlkit==0.13.3
 trove-classifiers==2025.12.1.14
 urllib3==2.6.2
 waitress==3.0.2
-waterstand==1.3.1
+waterstand==1.3.2
 Werkzeug==3.1.4
