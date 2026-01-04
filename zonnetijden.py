@@ -211,8 +211,14 @@ def getwaterinfo() -> dict:
   stand = waterstand.haalwaterstand('Katerveer', 'KATV')
   if stand['resultaat'] == 'NOK':
     return {}
-  result = {'hoogtenu': int(stand['nu']),
-            'hoogtemorgen': int(stand['morgen'])
+  hoogtenu = int(stand['nu'])
+  hoogtemorgen = int(stand['morgen'])
+  if hoogtenu == -999:
+    hoogtenu = hoogtemorgen
+  if hoogtemorgen == -999:
+    hoogtemorgen = hoogtenu
+  result = {'hoogtenu': hoogtenu,
+            'hoogtemorgen': hoogtemorgen
             }
   return result
 
