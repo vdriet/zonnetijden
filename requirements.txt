@@ -19,7 +19,7 @@ MarkupSafe==3.0.3
 mccabe==0.7.0
 numpy==2.4.0
 packaging==25.0
-pathspec==1.0.2
+pathspec==1.0.3
 pip==25.3
 pip-tools==7.5.2
 platformdirs==4.5.1
