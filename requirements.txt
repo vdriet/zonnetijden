@@ -30,7 +30,7 @@ pytest==9.0.2
 python-dateutil==2.9.0.post0
 pytz==2025.2
 requests==2.32.5
-setuptools==80.9.0
+setuptools==80.10.1
 six==1.17.0
 tomlkit==0.14.0
 trove-classifiers==2026.1.14.14
