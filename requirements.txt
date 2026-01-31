@@ -20,7 +20,7 @@ mccabe==0.7.0
 numpy==2.4.1
 packaging==26.0
 pathspec==1.0.4
-pip==25.3
+pip==26.0
 pip-tools==7.5.2
 platformdirs==4.5.1
 pluggy==1.6.0
