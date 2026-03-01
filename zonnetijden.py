@@ -1,4 +1,4 @@
-""" 
+"""
 Module voor het berekenen en weergeven van zonsopkomst- en ondergangstijden.
 
 Dit module biedt functionaliteit voor:
@@ -28,12 +28,12 @@ locatiecache = TTLCache(maxsize=10, ttl=86400)
 
 
 def leesjson(url: str) -> dict:
-  """ 
+  """
   Haalt JSON-data op van een gegeven URL.
-  
+
   Args:
       url: De URL waarvan de JSON-data opgehaald moet worden
-      
+
   Returns:
       dict: De opgehaalde JSON-data als dictionary
       {}: Als er een fout optreedt bij het ophalen
@@ -50,10 +50,10 @@ def leesjson(url: str) -> dict:
 def formatdate(date: datetime) -> str:
   """
   Converteert een datetime object naar een datum string.
-  
+
   Args:
       date: datetime object dat geformatteerd moet worden
-      
+
   Returns:
       str: Geformatteerde datum in YYYY-MM-DD formaat
   """
@@ -64,11 +64,11 @@ def formatdate(date: datetime) -> str:
 def formattime(date: datetime, seconds: bool = False) -> str:
   """
   Converteert een datetime object naar een tijd string.
-  
+
   Args:
       date: datetime object dat geformatteerd moet worden
       seconds: Of seconden meegenomen moeten worden in de output
-      
+
   Returns:
       str: Geformatteerde tijd in HH:MM- of HH:MM:SS-formaat
   """
@@ -83,10 +83,10 @@ def formattime(date: datetime, seconds: bool = False) -> str:
 def formattimedelta(timedelta):
   """
   Converteert een timedelta naar een leesbare tijd string.
-  
+
   Args:
       timedelta: Het tijdsverschil dat geformatteerd moet worden
-      
+
   Returns:
       str: Geformatteerd tijdsverschil in HH:MM:SS=formaat
   """
@@ -96,13 +96,13 @@ def formattimedelta(timedelta):
 def berekenzonnetijden(datum: str, plaats: str, lat: float, lon: float) -> dict:
   """
   Berekent zonsopkomst en -ondergang voor een specifieke locatie en datum.
-  
+
   Args:
       datum: Datum waarvoor de tijden berekend moeten worden (YYYY-MM-DD)
       plaats: Naam van de plaats
       lat: Breedtegraad van de locatie
       lon: Lengtegraad van de locatie
-      
+
   Returns:
       dict: Dictionary met zonsopkomst, -ondergang en andere zontijden
   """
@@ -117,14 +117,14 @@ def berekenzonnetijden(datum: str, plaats: str, lat: float, lon: float) -> dict:
 def getinfo(datum: str, plaats: str, lat: float, lon: float, seconds: bool = False) -> dict:
   """
   Verzamelt alle zoninformatie voor een specifieke datum en locatie.
-  
+
   Args:
       datum: Datum waarvoor de informatie opgevraagd wordt
       plaats: Naam van de plaats
       lat: Breedtegraad van de locatie
       lon: Lengtegraad van de locatie
       seconds: Of tijden met seconden weergegeven moeten worden
-      
+
   Returns:
       dict: Dictionary met datum, zonsopkomst, -ondergang en daglengte
   """
@@ -142,11 +142,11 @@ def getinfo(datum: str, plaats: str, lat: float, lon: float, seconds: bool = Fal
 def getinfohattem(datum: str, seconds: bool = False) -> dict:
   """
   Verzamelt zoninformatie specifiek voor Hattem.
-  
+
   Args:
       datum: Datum waarvoor de informatie opgevraagd wordt
       seconds: Of tijden met seconden weergegeven moeten worden
-      
+
   Returns:
       dict: Dictionary met zoninformatie voor Hattem
   """
@@ -157,7 +157,7 @@ def getinfohattem(datum: str, seconds: bool = False) -> dict:
 def vandaagget() -> str:
   """
   Genereert een overzichtspagina met zontijden voor meerdere datums.
-  
+
   Returns:
       str: HTML-pagina met zontijden van verschillende datums
   """
@@ -201,14 +201,14 @@ def getweerinfo() -> dict:
 def getwaterinfo() -> dict:
   """
   Haalt de actuele waterstand bij het Katerveer in Zwolle op.
-  
+
   De gegevens worden opgehaald uit de waterstand module en gecachet voor 2 uur.
-  
+
   Returns:
       dict: Dictionary met huidige en voorspelde waterstand voor morgen
       dict: Lege dictionary als er een fout optreedt
   """
-  stand = waterstand.haalwaterstand('Katerveer', 'KATV')
+  stand = waterstand.haalwaterstand('zwolle.ijssel')
   if stand['resultaat'] == 'NOK':
     return {}
   hoogtenu = int(stand['nu'])
@@ -227,10 +227,10 @@ def getwaterinfo() -> dict:
 def getlocatieinfo(plaatsnaam: str) -> dict:
   """
   Haalt locatiegegevens op voor een opgegeven plaatsnaam.
-  
+
   Args:
       plaatsnaam: Naam van de plaats of postcode waarvoor de coördinaten opgevraagd worden
-      
+
   Returns:
       dict: Dictionary met latitude en longitude coördinaten
       None: Als er geen locatie gevonden kan worden
@@ -250,10 +250,10 @@ def getlocatieinfo(plaatsnaam: str) -> dict:
 def bepaaltoenamekleur(verschil: int) -> str:
   """
   Bepaalt de achtergrondkleur voor een temperatuurstijging.
-  
+
   Args:
       verschil: Het aantal graden temperatuurstijging
-      
+
   Returns:
       str: CSS-kleurnaam passend bij de temperatuurstijging
   """
@@ -271,10 +271,10 @@ def bepaaltoenamekleur(verschil: int) -> str:
 def bepaalafnamekleur(verschil: int) -> str:
   """
   Bepaalt de achtergrondkleur voor een temperatuurdaling.
-  
+
   Args:
       verschil: Het aantal graden temperatuurdaling
-      
+
   Returns:
       str: CSS-kleurnaam passend bij de temperatuurdaling
   """
@@ -292,11 +292,11 @@ def bepaalafnamekleur(verschil: int) -> str:
 def bepaalkleur(max0: int, max1: int) -> str:
   """
   Bepaalt de achtergrondkleur op basis van temperatuurverschil.
-  
+
   Args:
       max0: Huidige maximumtemperatuur
       max1: Nieuwe maximumtemperatuur
-      
+
   Returns:
       str: CSS-kleurnaam passend bij het temperatuurverschil
   """
@@ -311,11 +311,11 @@ def bepaalkleur(max0: int, max1: int) -> str:
 def bepaalwaterkleur(stand: int, waterstandmorgen: int) -> tuple[str, str]:
   """
   Bepaalt de weergavekleuren voor waterstanden.
-  
+
   Args:
       stand: Huidige waterstand
       waterstandmorgen: Voorspelde waterstand voor morgen
-      
+
   Returns:
       tuple: Twee CSS-kleurnamen voor huidige en voorspelde waterstand
   """
@@ -327,7 +327,7 @@ def bepaalwaterkleur(stand: int, waterstandmorgen: int) -> tuple[str, str]:
 def bepaaldagerbij() -> int:
   """
   Bepaalt of de voorspelling van vandaag of morgen gebruikt moet worden.
-  
+
   Returns:
       int: 0 voor vandaag, 1 voor morgen (na 15:00)
   """
@@ -352,7 +352,7 @@ def dagvanafvandaag(aantaldagen) -> str:
 def getweergegevens() -> dict:
   """
   Verzamelt actuele weergegevens voor Hattem.
-  
+
   Returns:
       dict: Dictionary met temperatuur, windkracht, verwachting en andere weergegevens
   """
@@ -425,12 +425,12 @@ def weerget() -> str:
 def zonget() -> str:
   """
   Genereert een overzicht van zontijden voor een opgegeven plaats en periode.
-  
+
   Query parameters:
       plaats: Naam van de plaats (default: Hattem)
       terug: Aantal dagen terug (default: 10)
       vooruit: Aantal dagen vooruit (default: 50)
-  
+
   Returns:
       str: HTML-pagina met zontijden voor de opgegeven periode
   """
