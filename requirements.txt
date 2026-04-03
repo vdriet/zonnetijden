@@ -37,4 +37,4 @@ trove-classifiers==2026.1.14.14
 urllib3==2.6.3
 waitress==3.0.2
 waterstand==3.0.0
-Werkzeug==3.1.7
+Werkzeug==3.1.8
