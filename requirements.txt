@@ -2,7 +2,7 @@ astral==3.2
 astroid==4.0.4
 blinker==1.9.0
 cachetools==7.0.6
-certifi==2026.2.25
+certifi==2026.4.22
 charset-normalizer==3.4.7
 click==8.3.3
 coverage==7.13.5
