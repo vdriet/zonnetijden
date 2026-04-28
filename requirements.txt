@@ -33,7 +33,7 @@ requests==2.33.1
 setuptools==82.0.1
 six==1.17.0
 tomlkit==0.14.0
-trove-classifiers==2026.1.14.14
+trove-classifiers==2026.4.28.13
 urllib3==2.6.3
 waitress==3.0.2
 waterstand==3.0.0
