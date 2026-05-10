@@ -32,7 +32,7 @@ pytz==2026.2
 requests==2.33.1
 setuptools==82.0.1
 six==1.17.0
-tomlkit==0.14.0
+tomlkit==0.15.0
 trove-classifiers==2026.5.7.17
 urllib3==2.7.0
 waitress==3.0.2
