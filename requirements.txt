@@ -21,7 +21,7 @@ numpy==2.4.6
 packaging==26.2
 pathspec==1.1.1
 pip==26.1.2
-pip-tools==7.5.3
+pip-tools==7.6.0
 platformdirs==4.10.1
 pluggy==1.6.0
 Pygments==2.20.0
