@@ -3,7 +3,7 @@ astroid==4.3.4
 blinker==1.9.0
 cachetools==8.0.2
 certifi==2026.11.20
-charset-normalizer==3.5.2
+charset-normalizer==3.5.3
 click==8.5.1
 coverage==7.17.4
 dill==0.4.1
